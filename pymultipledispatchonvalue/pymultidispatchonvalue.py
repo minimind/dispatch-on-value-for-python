@@ -4,15 +4,16 @@ import itertools
 def match(stream, pattern):
     # We'll assume it's callable
     try:
-        return pattern(stream)
+        return pattern(stream), stream
 
     except TypeError:
         if not type(stream) == type(pattern):
-            return False
+            return False, []
 
         # OK, we'll assume it's a dictionary
         try:
             raise AttributeError()  # return compare_dictionaries(stream, pattern)
+
         except AttributeError:
             # Maybe a string or a list?
             try:
@@ -20,7 +21,7 @@ def match(stream, pattern):
                     return compare_primitives(stream, pattern)
                 else:
                     return compare_lists(stream, pattern)
-    
+
             except TypeError:
                 # Have to assume primitives
                 return compare_primitives(stream, pattern)
@@ -28,23 +29,23 @@ def match(stream, pattern):
 
 def compare_primitives(stream, pattern):
     if type(stream) == type(pattern) and stream == pattern:
-        return True
+        return True, stream
     else:
-        return False
+        return False, []
 
 
 def compare_lists(stream, pattern):
     # We compare each item in the list. If they all match, then we have
     # a match.
     if not len(stream) == len(pattern):
-        return False
+        return False, []
 
     for s, p in itertools.izip(stream, pattern):
-        matched = match(s, p)
+        (matched, matched_stream) = match(s, p)
         if not matched:
-            return False
+            return False, []
 
-    return True
+    return True, stream
 
 
 '''def compare_dictionaries(stream, pattern):
