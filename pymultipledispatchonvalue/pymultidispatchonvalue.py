@@ -1,17 +1,27 @@
-primitive_types = {int, float, str, bool}
+import itertools
 
 
-def match(stream, fn1, d, pattern):
-    if type(stream) in primitive_types:
-        return compare_primitive(stream, pattern)
+def match(stream, pattern):
+    if not type(stream) == type(pattern):
+        return False
 
-    elif type(pattern) is list:
-        return compare_lists(stream, pattern)
+    # We'll assume it's a dictionary
+    try:
+        raise AttributeError()  # return compare_dictionaries(stream, pattern)
+    except AttributeError:
+        # Maybe a list?
+        try:
+            if isinstance(stream, basestring):
+                return compare_primitives(stream, pattern)
+            else:
+                return compare_lists(stream, pattern)
+
+        except TypeError:
+            # Have to assume primitives
+            return compare_primitives(stream, pattern)
 
 
-def compare_primitive(stream, pattern):
-    assert type(stream) in primitive_types
-
+def compare_primitives(stream, pattern):
     if type(stream) == type(pattern) and stream == pattern:
         return True
     else:
@@ -22,27 +32,17 @@ def compare_lists(stream, pattern):
     # We compare each item in the list. If they all match, then we have
     # a match.
     if not len(stream) == len(pattern):
-        return False, []
+        return False
 
-    for s, p in zip(stream, pattern):
-        if type(p) in primitive_types:
-            matched = compare_primitive(s, p)
-            if not matched:
-                return False
-
-        elif type(p) is list:
-            matched = compare_lists(s, p)
-            if not matched:
-                return False
+    for s, p in itertools.izip(stream, pattern):
+        matched = match(s, p)
+        if not matched:
+            return False
 
     return True
 
 
-
-
-
-
-def compare_dictionaries(stream, pattern):
+'''def compare_dictionaries(stream, pattern):
     for k, v in pattern.iteritems():
         if not k in stream:
             return False, []
@@ -58,5 +58,5 @@ def compare_dictionaries(stream, pattern):
         elif type(v) is list and type(v2) is list:
             return compare_lists(v, v2), stream
 
-    return True, stream
+    return True, stream'''
 
