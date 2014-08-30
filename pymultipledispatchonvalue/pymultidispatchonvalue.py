@@ -2,23 +2,28 @@ import itertools
 
 
 def match(stream, pattern):
-    if not type(stream) == type(pattern):
-        return False
-
-    # We'll assume it's a dictionary
+    # We'll assume it's callable
     try:
-        raise AttributeError()  # return compare_dictionaries(stream, pattern)
-    except AttributeError:
-        # Maybe a list?
-        try:
-            if isinstance(stream, basestring):
-                return compare_primitives(stream, pattern)
-            else:
-                return compare_lists(stream, pattern)
+        return pattern(stream)
 
-        except TypeError:
-            # Have to assume primitives
-            return compare_primitives(stream, pattern)
+    except TypeError:
+        if not type(stream) == type(pattern):
+            return False
+
+        # OK, we'll assume it's a dictionary
+        try:
+            raise AttributeError()  # return compare_dictionaries(stream, pattern)
+        except AttributeError:
+            # Maybe a string or a list?
+            try:
+                if isinstance(stream, basestring):
+                    return compare_primitives(stream, pattern)
+                else:
+                    return compare_lists(stream, pattern)
+    
+            except TypeError:
+                # Have to assume primitives
+                return compare_primitives(stream, pattern)
 
 
 def compare_primitives(stream, pattern):

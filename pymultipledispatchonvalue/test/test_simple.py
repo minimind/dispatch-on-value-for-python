@@ -101,6 +101,47 @@ class TestSequenceFunctions(unittest.TestCase):
         matched = pymultidispatchonvalue.match(stream, pattern)
         assert not matched
 
+    def test_lambda1(self):
+        stream = 1
+        pattern = lambda x: x == 1
+        matched = pymultidispatchonvalue.match(stream, pattern)
+        assert matched
+
+    def test_lambda2(self):
+        stream = 3
+        pattern = lambda x: 1 < x < 5
+        matched = pymultidispatchonvalue.match(stream, pattern)
+        assert matched
+
+    def test_lambda3(self):
+        stream = 7
+        pattern = lambda x: 1 < x < 5
+        matched = pymultidispatchonvalue.match(stream, pattern)
+        assert not matched
+
+    def test_lambda4(self):
+        stream = [1, 2, 3]
+        pattern = [1, 2, lambda x: x == 3]
+        matched = pymultidispatchonvalue.match(stream, pattern)
+        assert matched
+
+    def test_lambda5(self):
+        stream = [1, 2, 4]
+        pattern = [1, 2, lambda x: x == 3]
+        matched = pymultidispatchonvalue.match(stream, pattern)
+        assert not matched
+
+    def test_lambda6(self):
+        stream = [1, 2, [4, 5]]
+        pattern = [1, 2, [lambda x: x == 4, 5]]
+        matched = pymultidispatchonvalue.match(stream, pattern)
+        assert  matched
+
+    def test_lambda7(self):
+        stream = [1, 2, [4, 5]]
+        pattern = [1, 2, [lambda x: x == 4, 4]]
+        matched = pymultidispatchonvalue.match(stream, pattern)
+        assert not matched
 
 
 if __name__ == '__main__':
