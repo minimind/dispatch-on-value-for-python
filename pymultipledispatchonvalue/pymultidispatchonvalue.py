@@ -15,14 +15,25 @@ class DispatchOnValue(object):
     def __init__(self):
         self.functions = []
 
-    def add(self, fn, pattern):
-        self.functions.append((fn, pattern))
+    def add(self, pattern):
+        copy_of_parent_class = self
+
+        def wrap(f):
+            def wrapped_f(*args):
+                f(*args)
+            print 'adding'
+            copy_of_parent_class.functions.append((f, pattern))
+
+            return wrapped_f
+
+        return wrap
 
     def dispatch(self, stream):
         for t in self.functions:
-            (matched, matched_stream) = self.match(stream, t(2))
+            (matched, matched_stream) = self.match(stream, t[1])
             if matched:
-                t(1)(matched_stream)
+                f = t[0]
+                f(matched_stream)
                 return True
 
         return False
