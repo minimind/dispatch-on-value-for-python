@@ -1,17 +1,25 @@
-# Multiple Dispatch on Value
+# Dispatch on Value for Python
 
-This package provides multiple dispatch on value complex nested lists and dictionaries.
+This package provides  dispatch on value complex nested lists and dictionaries.
 You can use lambda to do expression matching and an 'any' token that is a
 wildcard that ensures identical values can be matched.
+
+It can be [downloaded from github](https://github.com/minimind/dispatch-on-value-for-python "Home on Github").
+
+Unit tests can be run using:
+
+```bash
+python -m unittest discover -s test
+```
 
 ## Quick guide
 
 Start your code with this:
 
 ```python
-from pymultidispatchonvalue import *
+import dispatchonvalue as dv
 
-dispatchOnValue = DispatchOnValue()
+dispatchOnValue = dv.DispatchOnValue()
 ```
 
 Then register your overloaded functions:
@@ -121,8 +129,6 @@ will be ignored. You can ensure the dictionaries are exactly the same by using
 ```dispatch_strict()``` rather than ```dispatch()```. For example:
 
 ```python
-from pymultidispatchonvalue import match
-
 @dispatchOnValue.add({'name': 'john', 'age': 32})
 def _(a):
     # Do something

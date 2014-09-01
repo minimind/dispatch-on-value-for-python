@@ -1,16 +1,16 @@
 from distutils.core import setup
 
 setup(
-    name='pymultidispatchonvalue',
+    name='dispatchonvalue',
     version='0.1.0',
     author='Ian Macinnes',
-    author_email='ianma@bitzoo.co.uk',
-    packages=['pymultidispatchonvalue', 'pymultidispatchonvalue.test'],
-    url='http://pypi.python.org/pypi/pymultidispatchonvalue/',
+    author_email='ian.macinnes@gmail.com',
+    packages=['dispatchonvalue', 'dispatchonvalue.test'],
+    url='http://pypi.python.org/pypi/dispatchonvalue/',
     license='LICENSE.txt',
-    description='A Python package providing multiple dispatch on values for ' +
-                'nested lists and dictionary data structures.',
-    long_description=open('README.txt').read(),
+    description='Python package providing dispatch on values for ' +
+                'arbitrarily nested lists and dictionary data structures.',
+    long_description=open('README.md').read(),
     install_requires=[
     ],
 )
