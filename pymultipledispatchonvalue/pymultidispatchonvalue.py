@@ -21,16 +21,17 @@ class DispatchOnValue(object):
         def wrap(f):
             def wrapped_f(*args):
                 f(*args)
-            print 'adding'
-            copy_of_parent_class.functions.append((f, pattern))
 
+            copy_of_parent_class.functions.append((f, pattern))
             return wrapped_f
 
         return wrap
 
     def dispatch(self, stream, *args):
         for t in self.functions:
-            (matched, matched_stream) = self.match(stream, t[1])
+            (matched, matched_stream) = self.match(
+                stream, t[1], {'strict': False}
+            )
             if matched:
                 f = t[0]
                 f(matched_stream, *args)
@@ -38,10 +39,19 @@ class DispatchOnValue(object):
 
         return False
 
-    def match(self, stream, pattern):
-        return self.real_match(stream, pattern, {})
+    def dispatch_strict(self, stream, *args):
+        for t in self.functions:
+            (matched, matched_stream) = self.match(
+                stream, t[1], {'strict': True}
+            )
+            if matched:
+                f = t[0]
+                f(matched_stream, *args)
+                return True
 
-    def real_match(self, stream, pattern, context):
+        return False
+
+    def match(self, stream, pattern, context):
         # Maybe it's any_x?
         if isinstance(pattern, AnyValue):
             if pattern.num in context:
@@ -65,7 +75,7 @@ class DispatchOnValue(object):
             except AttributeError:
                 # Maybe a string or a list?
                 try:
-                    # I hate to add an isinstance here but I can't see 
+                    # I hate to add an isinstance here but I can't see
                     # how to lose it
                     if isinstance(stream, basestring):
                         return self.compare_primitives(stream, pattern, context)
@@ -90,19 +100,23 @@ class DispatchOnValue(object):
             return False, []
 
         for s, p in itertools.izip(stream, pattern):
-            (matched, matched_stream) = self.real_match(s, p, context)
+            (matched, matched_stream) = self.match(s, p, context)
             if not matched:
                 return False, []
 
         return True, stream
 
     def compare_dictionaries(self, stream, pattern, context):
+        if 'strict' in context and context['strict']:
+            if not len(stream) == len(pattern):
+                return False, []
+
         for k, v in pattern.iteritems():
             if not k in stream:
                 return False, []
 
             s = stream[k]
-            (matched, matched_stream) = self.real_match(s, v, context)
+            (matched, matched_stream) = self.match(s, v, context)
             if not matched:
                 return False, []
 
