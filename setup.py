@@ -2,15 +2,21 @@ from distutils.core import setup
 
 setup(
     name='dispatchonvalue',
-    version='0.1.0',
+    version='0.9.0',
     author='Ian Macinnes',
     author_email='ian.macinnes@gmail.com',
     packages=['dispatchonvalue', 'dispatchonvalue.test'],
-    url='http://pypi.python.org/pypi/dispatchonvalue/',
-    license='LICENSE.txt',
+    url='https://github.com/minimind/dispatch-on-value-for-python',
+    license='MIT.txt',
     description='Python package providing dispatch on values for ' +
                 'arbitrarily nested lists and dictionary data structures.',
     long_description=open('README.md').read(),
-    install_requires=[
+    classifiers=[
+        'Development Status :: 4 - Beta',
+        'License :: OSI Approved :: MIT License',
+        'Intended Audience :: Developers',
+        'Programming Language :: Python :: 2 :: Only'
     ],
+    keywords=['dispatch on value', 'multiple dispatch', 'dynamic dispatch'],
+    include_package_data=True
 )
