@@ -28,12 +28,12 @@ class DispatchOnValue(object):
 
         return wrap
 
-    def dispatch(self, stream):
+    def dispatch(self, stream, *args):
         for t in self.functions:
             (matched, matched_stream) = self.match(stream, t[1])
             if matched:
                 f = t[0]
-                f(matched_stream)
+                f(matched_stream, *args)
                 return True
 
         return False
