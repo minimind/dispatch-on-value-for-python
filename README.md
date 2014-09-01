@@ -35,8 +35,8 @@ p = [4, 5, 6]
 dispatchOnValue.dispatch(p)  # Will call second function above
 ```
 
-The return value is True or False, depending upon whether it could match and
-call a function or not.
+The return value is ```True``` or ```False```, depending upon whether a function
+could be matched and called.
 
 ## Some quick examples
 
@@ -116,9 +116,9 @@ values are identical. e.g.
 ## Matching on dictionaries is either partial or strict
 
 Matching on directories is partial by default. This means dictionaries will
-match if all the key/value pairs in the pattern are matched and extra pairs
-ignored. You can ensure the dictionaries are exactly the same by using
-```dispatch_strict()``` rather than ```dispatch()```.
+match if all the key/value pairs in the pattern are matched - any extra pairs
+will be ignored. You can ensure the dictionaries are exactly the same by using
+```dispatch_strict()``` rather than ```dispatch()```. For example:
 
 ```python
 from pymultidispatchonvalue import match
