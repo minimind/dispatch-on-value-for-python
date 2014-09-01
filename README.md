@@ -54,13 +54,13 @@ call a function or not.
         # Do something
     
     p = [1, 2, 3]
-    dispatchOnValue.dispatch(p)  # This will call fn_1
+    dispatchOnValue.dispatch(p)  # This will call fn_1 and return True
     
     p = [4, 5, 6]
-    dispatchOnValue.dispatch(p)  # This will call fn_2
+    dispatchOnValue.dispatch(p)  # This will call fn_2 and return True
     
     p = [1, 2, 6]
-    dispatchOnValue.dispatch(p)  # This will not call anything
+    dispatchOnValue.dispatch(p)  # This will not call anything and return False
     ```
 
 3. Data structure patterns can be arbitrary nested:
@@ -69,7 +69,7 @@ call a function or not.
     @dispatchOnValue.add({'one': 3, 'animals': ['frog', 'mouse']})
     ```
 
-4. Use of wildcard tokens any_a, any_b, ... any_z that will ensure
+4. Use of wildcard tokens ```any_a```, ```any_b```, ... ```any_z``` that will ensure
 values are identical. e.g.
 
     ```python
@@ -82,11 +82,11 @@ values are identical. e.g.
     dispatchOnValue.dispatch([any_a, any_a, 3, [3, 'd', any_a]])  # This will not match
     ```
 
-6. You can pass as many parameters as you want:
+6. You can pass as many extra parameters as you want:
 
     ```python
     @dispatchOnValue.add([1, 2])  # This is the matching pattern
-    def _(a, something, something_else):
+    def _(a, my_abc, my_def):
         assert a == [1, 2]
         # Do something
     
@@ -104,11 +104,21 @@ values are identical. e.g.
     dispatchOnValue.dispatch([1, 2, 2, 'hello'])  # This will not match
     ```
 
+    ```python
+    @dispatchOnValue.add(['a', 2, lambda x: x == 'b' or x == 'c'])
+    def _(a):
+        # Do something
+
+    dispatchOnValue.dispatch(['a', 2, 'c'])  # This will match
+    dispatchOnValue.dispatch(['a', 2, 's'])  # This will not match
+    ```
+
 ## Matching on dictionaries is either partial or strict
 
-Matching on directories is partial by default e.g. the pattern {'name': 'john'} will match on 
-{'name': 'john, 'age': 32} even though 'age': 32 isn't in the pattern. You can
-ensure the dictionaries are exactly the same by using strict_match.
+Matching on directories is partial by default. This means dictionaries will
+match if all the key/value pairs in the pattern are matched and extra pairs
+ignored. You can ensure the dictionaries are exactly the same by using
+```dispatch_strict()``` rather than ```dispatch()```.
 
 ```python
 from pymultidispatchonvalue import match
