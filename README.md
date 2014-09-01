@@ -4,7 +4,7 @@ This package provides multiple dispatch on value complex nested lists and dictio
 You can use lambda to do expression matching and an 'any' token that is a
 wildcard that ensures identical values can be matched.
 
-## Quick instructions
+## Quick guide
 
 Start your code with this:
 
@@ -82,7 +82,7 @@ values are identical. e.g.
     dispatchOnValue.dispatch([any_a, any_a, 3, [3, 'd', any_a]])  # This will not match
     ```
 
-6. You can pass as many extra parameters as you want:
+6. You can pass as many extra parameters as you want when dispatching:
 
     ```python
     @dispatchOnValue.add([1, 2])  # This is the matching pattern
