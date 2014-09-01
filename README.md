@@ -40,33 +40,27 @@ call a function or not.
 
 ## Some quick examples
 
-1. Match on primitive types (e.g. simple integers):
+5. Multiple dispatch on value:
 
     ```python
-    @dispatchOnValue.add(1)  # Primitive type value 1 is the matching pattern
-    def _(a):
-        assert a == 1
+    @dispatchOnValue.add([1, 2, 3])
+    def fn_1(a):
+        assert a = [1, 2, 3]
         # Do something
     
-    @dispatchOnValue.add(2)  # Primitive type value 2 is the matching pattern
-    def _(a):
-        assert a == 2
-        # Do something
-        
-    dispatchOnValue.dispatch(1)  # This will match and call the first function
-    dispatchOnValue.dispatch(2)  # This will match and call the second function
-    ```
-
-2. Match on lists:
-
-    ```python
-    @dispatchOnValue.add(['z', 'b', 3, 'z'])
-    def _(a):
-        assert a == ['z', 'b', 3, 'z']
+    @dispatchOnValue.add([4, 5, 6])
+    def fn_2(a):
+        assert a = [4, 5, 6]
         # Do something
     
-    dispatchOnValue.dispatch(['z', 'b', 3, 'z'])  # This will match
-    dispatchOnValue.dispatch(['a', 'b', 4, 'a'])  # This will not match
+    p = [1, 2, 3]
+    dispatchOnValue.dispatch(p)  # This will call fn_1
+    
+    p = [4, 5, 6]
+    dispatchOnValue.dispatch(p)  # This will call fn_2
+    
+    p = [1, 2, 6]
+    dispatchOnValue.dispatch(p)  # This will not call anything
     ```
 
 3. Data structure patterns can be arbitrary nested:
@@ -88,27 +82,6 @@ values are identical. e.g.
     dispatchOnValue.dispatch([any_a, any_a, 3, [3, 'd', any_a]])  # This will not match
     ```
 
-5. Multiple dispatch on value:
-
-    ```python
-    @dispatchOnValue.add([1, 2, {'animal': 'goat'}])
-    def fn_1(a):
-        # Do something
-    
-    @dispatchOnValue.add([1, 2, {'animal': 'frog'}])
-    def fn_2(a):
-        # Do something
-    
-    p = [1, 2, {'animal': 'goat'}]
-    dispatchOnValue.dispatch(p)  # This will call fn_1
-    
-    p = [1, 2, {'animal': 'frog'}]
-    dispatchOnValue.dispatch(p)  # This will call fn_2
-    
-    p = [1, 2, {'animal': 'mouse'}]
-    dispatchOnValue.dispatch(p)  # This will not call anything
-    ```
-
 6. You can pass as many parameters as you want:
 
     ```python
@@ -120,27 +93,39 @@ values are identical. e.g.
     dispatchOnValue.dispatch([1, 2], 'abc', 'def')
     ```
 
-## Matching on dictionaries is loose or strict
+7. Use lambda's as part of the pattern matching:
 
-Matching on directories is loose e.g. the pattern {'name': 'john'} will match on 
+    ```python
+    @dispatchOnValue.add([1, 2, lambda x: 3 < x < 7, 'hello'])
+    def _(a):
+        # Do something
+        
+    dispatchOnValue.dispatch([1, 2, 4, 'hello'])  # This will match
+    dispatchOnValue.dispatch([1, 2, 2, 'hello'])  # This will not match
+    ```
+
+## Matching on dictionaries is either partial or strict
+
+Matching on directories is partial by default e.g. the pattern {'name': 'john'} will match on 
 {'name': 'john, 'age': 32} even though 'age': 32 isn't in the pattern. You can
 ensure the dictionaries are exactly the same by using strict_match.
 
 ```python
-from pymultidispatchonvalue import match, expression, ANY_A, ANY_B
+from pymultidispatchonvalue import match
 
-def fn1(li, a):
-  assert a == {'name': 'john', 'age': 32}
+@dispatchOnValue.add({'name': 'john', 'age': 32})
+def _(a):
+    # Do something
 
 dict1 = {'name': 'john', 'age': 32}
 
-# These will match f1 and as the type isn't a list, tail will always be []:
-(matched, tail) = match(dict1, fn1, li, {'name': 'john', 'age': 32})
-(matched, tail) = match(dict1, fn1, li, {'name': 'john'})
-(matched, tail) = match(dict1, fn1, li, {'age': 32})
+# These will match because they contain the minimal dictionary items
+dispatchOnValue.dispatch({'name': 'john', 'age': 32})
+dispatchOnValue.dispatch({'name': 'john', 'age': 32, 'sex': 'male'})
 
-# These will not match:
-(matched, tail) = match(dict1, fn1, li, {'name': 'john', 'age': 76})
-(matched, tail) = match(dict1, fn1, li, {'name': 'lucy', 'age': 32})
-(matched, tail) = match(dict1, fn1, li, {'name': 'lucy'})
+# This will match because it's strict and the pattern is exactly the same
+dispatchOnValue.dispatch_strict({'name': 'john', 'age': 32})
+
+# This will not match because the dictionary doesn't match exactly
+dispatchOnValue.dispatch_strict({'name': 'john', 'age': 32, 'sex': 'male'})
 ```
