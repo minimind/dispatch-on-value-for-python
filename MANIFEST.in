@@ -1,2 +1,2 @@
-include README.md
-recursive-include *.txt
+include README.rst
+include *.txt

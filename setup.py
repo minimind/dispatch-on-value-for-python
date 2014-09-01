@@ -7,10 +7,10 @@ setup(
     author_email='ian.macinnes@gmail.com',
     packages=['dispatchonvalue', 'dispatchonvalue.test'],
     url='https://github.com/minimind/dispatch-on-value-for-python',
-    license='MIT.txt',
+    license='MIT',
     description='Python package providing dispatch on values for ' +
                 'arbitrarily nested lists and dictionary data structures.',
-    long_description=open('README.md').read(),
+    long_description=open('README.rst').read(),
     classifiers=[
         'Development Status :: 4 - Beta',
         'License :: OSI Approved :: MIT License',
