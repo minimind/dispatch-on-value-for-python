@@ -10,9 +10,17 @@ The home page is on github at:
 
 https://github.com/minimind/dispatch-on-value-for-python
 
-Unit tests can be run using::
+Install using pip::
+
+    pip install dispatchonvalue
+
+Unit tests can be run from the source directory using::
 
     python -m unittest discover -s test
+
+Any queries and comments are welcome can be sent to:
+
+ian.macinnes@gmail.com
 
 ***********
 Quick guide
