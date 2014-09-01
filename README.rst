@@ -95,21 +95,21 @@ values are identical. e.g.::
 
 5. Use lambda's as part of the pattern matching::
 
-    @dispatchOnValue.add([1, 2, lambda x: 3 < x < 7, 'hello'])
-    def _(a):
-        # Do something
+       @dispatchOnValue.add([1, 2, lambda x: 3 < x < 7, 'hello'])
+       def _(a):
+           # Do something
         
-    dispatchOnValue.dispatch([1, 2, 4, 'hello'])  # This will match
-    dispatchOnValue.dispatch([1, 2, 2, 'hello'])  # This will not match
+       dispatchOnValue.dispatch([1, 2, 4, 'hello'])  # This will match
+       dispatchOnValue.dispatch([1, 2, 2, 'hello'])  # This will not match
 
-::
+   Another example::
 
-    @dispatchOnValue.add(['a', 2, lambda x: x == 'b' or x == 'c'])
-    def _(a):
-        # Do something
+       @dispatchOnValue.add(['a', 2, lambda x: x == 'b' or x == 'c'])
+       def _(a):
+           # Do something
 
-    dispatchOnValue.dispatch(['a', 2, 'c'])  # This will match
-    dispatchOnValue.dispatch(['a', 2, 's'])  # This will not match
+       dispatchOnValue.dispatch(['a', 2, 'c'])  # This will match
+       dispatchOnValue.dispatch(['a', 2, 's'])  # This will not match
 
 ****************************************************
 Matching on dictionaries is either partial or strict
