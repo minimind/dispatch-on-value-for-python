@@ -4,7 +4,8 @@ Dispatch on Value for Python
 
 This package provides  dispatch on value complex nested lists and dictionaries.
 You can use lambda to do expression matching and an 'any' token that is a
-wildcard that ensures identical values can be matched.
+wildcard that ensures identical values can be matched. It is useful for getting
+rid of complicated and difficult to read if...elif...elif... chains.
 
 The home page is on github at:
 
@@ -84,13 +85,12 @@ Some quick examples
 3. Use of wildcard tokens any_a, any_b, ... any_z that will ensure
 values are identical. e.g.::
 
-    @dispatch_on_value.add(['z', 'b', 3, [3, 'd', 'z']])
-    def _(a):
-        assert a == ['z', 'b', 3, [3, 'd', 'z']]
-        # Do something
+        @dispatch_on_value.add([dv.any_a, 'b', 3, [3, 'd', dv.any_a]])
+        def _(a):
+            # Do something
         
-    dispatch_on_value.dispatch([any_a, 'b',   3, [3, 'd', any_a]])  # This will match
-    dispatch_on_value.dispatch([any_a, any_a, 3, [3, 'd', any_a]])  # This will not match
+        dispatch_on_value.dispatch(['c', 'b', 3, [3, 'd', 'c']])  # This will match
+        dispatch_on_value.dispatch(['c', 'b', 3, [3, 'd', 'f']])  # This will not match
 
 4. You can pass as many extra parameters as you want when dispatching::
 
