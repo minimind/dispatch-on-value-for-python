@@ -6,10 +6,10 @@ This package provides the ability to dispatch on values (as opposed to
 dispatching on types) by pairing functions with patterns. It uses pattern
 matching to dispatch on complex, nested data structures containing lists,
 dictionaries and primitive types. You can use ``lambda`` to do expression
-matching and use wildcards to ensure identical values can be matched (see
-``any_a``). It can alleviate complicated and difficult to read
-``if ... elif ... elif ...`` chains and dramatically simplify the code that
-needs to be written.
+matching and utilise wildcard parameters to ensure identical values can be
+matched (see ``any_a``). It can alleviate complicated and difficult to read
+``if ... elif ... elif ...`` chains and simplify the code needing to be
+written.
 
 Value patterns can be registered dynamically, allowing a great flexibility
 in determining which functions are called on which value patterns.
@@ -92,7 +92,7 @@ different functions ``fn_1`` and ``fn_2`` depending upon the value of ``p``::
 Data structure patterns can be arbitrary nested
 ===============================================
 
-The patterns can be as complex as you like::
+The patterns can be as complex and as nested as you like::
 
     @dispatch_on_value.add({'one': 3, 'animals': ['frog', 'mouse', 34]})
 
@@ -120,7 +120,8 @@ Another example::
 Wildcards
 =========
 
-Use of wildcard tokens ``any_a``, ``any_b``, ... ``any_z`` can ensure values are identical. e.g.::
+Use of wildcard tokens ``any_a``, ``any_b``, ... ``any_z`` can ensure values are
+identical. e.g.::
 
     @dispatch_on_value.add([dv.any_a, 'b', 3, [3, 'd', dv.any_a]])
     def _(a):

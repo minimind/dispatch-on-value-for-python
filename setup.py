@@ -2,15 +2,15 @@ from distutils.core import setup
 
 setup(
     name='dispatchonvalue',
-    version='0.9.2',
+    version='0.9.3',
     author='Ian Macinnes',
     author_email='ian.macinnes@gmail.com',
     packages=['dispatchonvalue', 'dispatchonvalue.test'],
     url='https://github.com/minimind/dispatch-on-value-for-python',
     license='MIT',
     description='Provides the ability to dispatch on values using pattern'
-                'matching for various builtin types such as nested '
-                'lists and dictionaries.',
+                'matching on complex, nested data structures containing '
+                'lists, dictionaries and primitive types',
     long_description=open('README.rst').read(),
     classifiers=[
         'Development Status :: 4 - Beta',
