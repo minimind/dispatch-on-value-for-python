@@ -1,7 +1,16 @@
+"""Provide dispatch on value for complex arbitrarily nested lists and
+dictionaries.
+
+You can use lambda to do expression matching and an 'any' token that is a
+wildcard that ensures identical values can be matched. It is useful for getting
+rid of complicated and difficult to read if...elif...elif... chains.
+
+"""
 import itertools
 
 
 class AnyValue(object):
+    """Allow wildcard item in DispatchOnValue."""
     def __init__(self, num):
         self.num = num
 
@@ -34,10 +43,14 @@ any_z = AnyValue(26)
 
 
 class DispatchOnValue(object):
+    """Provide dispatch on value for complex arbitrarily nested lists and
+    dictionaries."""
+
     def __init__(self):
         self.functions = []
 
     def add(self, pattern):
+        """Decorator to add new dispatch functions."""
         copy_of_parent_class = self
 
         def wrap(f):
@@ -50,8 +63,16 @@ class DispatchOnValue(object):
         return wrap
 
     def dispatch(self, stream, *args):
+        """
+        Dispatch to function held internally depending upon the value of stream.
+
+        Matching on directories is partial. This means dictionaries will
+        match if all the key/value pairs in the pattern are matched - any extra
+        pairs will be ignored.
+
+        """
         for t in self.functions:
-            (matched, matched_stream) = self.match(
+            (matched, matched_stream) = self._match(
                 stream, t[1], {'strict': False}
             )
             if matched:
@@ -62,8 +83,15 @@ class DispatchOnValue(object):
         return False
 
     def dispatch_strict(self, stream, *args):
+        """
+        Dispatch to function held internally depending upon the value of stream.
+
+        Matching on directories is strict. This means dictionaries will
+        match if they are exactly the same.
+
+        """
         for t in self.functions:
-            (matched, matched_stream) = self.match(
+            (matched, matched_stream) = self._match(
                 stream, t[1], {'strict': True}
             )
             if matched:
@@ -73,8 +101,7 @@ class DispatchOnValue(object):
 
         return False
 
-    def match(self, stream, pattern, context):
-        # Maybe it's any_x?
+    def _match(self, stream, pattern, context):
         if isinstance(pattern, AnyValue):
             if pattern.num in context:
                 return context[pattern.num] == stream, stream
@@ -82,53 +109,53 @@ class DispatchOnValue(object):
                 context[pattern.num] = stream
                 return True, stream
 
-        # We'll assume it's callable
         try:
+            # First, is it callable?
             return pattern(stream), stream
 
         except TypeError:
             if not type(stream) == type(pattern):
                 return False, []
 
-            # OK, we'll assume it's a dictionary
             try:
-                return self.compare_dictionaries(stream, pattern, context)
+                # OK, we'll assume it's a dictionary
+                return self._compare_dictionaries(stream, pattern, context)
 
             except (AttributeError, TypeError):
                 # Maybe a string or a list?
                 try:
-                    # I hate to add an isinstance here but I can't see
+                    # I hate to add an isinstance() here but I can't see
                     # how to lose it
                     if isinstance(stream, basestring):
-                        return self.compare_primitives(stream, pattern, context)
+                        return self._compare_primitives(stream, pattern)
                     else:
-                        return self.compare_lists(stream, pattern, context)
+                        return self._compare_lists(stream, pattern, context)
 
                 except TypeError:
                     # Have to assume primitives
-                    return self.compare_primitives(stream, pattern, context)
+                    return self._compare_primitives(stream, pattern)
 
     @staticmethod
-    def compare_primitives(stream, pattern, context):
+    def _compare_primitives(stream, pattern):
         if type(stream) == type(pattern) and stream == pattern:
             return True, stream
         else:
             return False, []
 
-    def compare_lists(self, stream, pattern, context):
+    def _compare_lists(self, stream, pattern, context):
         # We compare each item in the list. If they all match, then we have
         # a match.
         if not len(stream) == len(pattern):
             return False, []
 
         for s, p in itertools.izip(stream, pattern):
-            (matched, matched_stream) = self.match(s, p, context)
+            (matched, matched_stream) = self._match(s, p, context)
             if not matched:
                 return False, []
 
         return True, stream
 
-    def compare_dictionaries(self, stream, pattern, context):
+    def _compare_dictionaries(self, stream, pattern, context):
         if 'strict' in context and context['strict']:
             if not len(stream) == len(pattern):
                 return False, []
@@ -138,7 +165,7 @@ class DispatchOnValue(object):
                 return False, []
 
             s = stream[k]
-            (matched, matched_stream) = self.match(s, v, context)
+            (matched, matched_stream) = self._match(s, v, context)
             if not matched:
                 return False, []
 

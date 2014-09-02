@@ -7,18 +7,16 @@ class TestExamples(unittest.TestCase):
         called = [0]
 
         dispatch_on_value = dv.DispatchOnValue()
-        @dispatch_on_value.add([1, 2, 3])  # Primitive type value 1 is the matching pattern
+        @dispatch_on_value.add([1, 2, 3])
         def _(a):
             called[0] = 1
-            # Do something
 
-        @dispatch_on_value.add([4, 5, 6])  # Primitive type value 2 is the matching pattern
+        @dispatch_on_value.add([4, 5, 6])
         def _(a):
             called[0] = 2
-            # Do something
 
         p = [4, 5, 6]
-        dispatch_on_value.dispatch(p)  # Will call second function above
+        dispatch_on_value.dispatch(p)  # Should call second function above
         assert called[0] == 2
 
     def test_1_multi_dispatch_on_value(self):
@@ -68,22 +66,25 @@ class TestExamples(unittest.TestCase):
         def _(a):
             called[0] = 1
 
-        dispatch_on_value.dispatch(['c', 'b', 3, [3, 'd', 'c']])  # This will match
+        # Will match
+        dispatch_on_value.dispatch(['c', 'b', 3, [3, 'd', 'c']])
         assert called[0] == 1
 
         called[0] = 0
-        dispatch_on_value.dispatch(['f', 'b', 3, [3, 'd', 'f']])  # This will match
+        # Will match
+        dispatch_on_value.dispatch(['f', 'b', 3, [3, 'd', 'f']])
         assert called[0] == 1
 
         called[0] = 0
-        dispatch_on_value.dispatch(['c', 'b', 3, [3, 'd', 'f']])  # This will not match
+        # Will not match
+        dispatch_on_value.dispatch(['c', 'b', 3, [3, 'd', 'f']])
         assert called[0] == 0
 
     def test_4_pass_parameters(self):
         called = [0]
         dispatch_on_value = dv.DispatchOnValue()
 
-        @dispatch_on_value.add([1, 2])  # This is the matching pattern
+        @dispatch_on_value.add([1, 2])
         def _(a, my_abc, my_def):
             assert a == [1, 2]
             assert my_abc == 'abc'

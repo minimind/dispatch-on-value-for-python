@@ -2,10 +2,11 @@
 Dispatch on Value for Python
 ============================
 
-This package provides  dispatch on value complex nested lists and dictionaries.
-You can use lambda to do expression matching and an 'any' token that is a
-wildcard that ensures identical values can be matched. It is useful for getting
-rid of complicated and difficult to read if...elif...elif... chains.
+This package provides dispatch on value complex for arbitrarily nested lists and
+dictionaries. You can use lambda to do expression matching and an 'any'
+token that is a wildcard that ensures identical values can be matched. It
+is useful for getting rid of complicated and difficult to read
+if...elif...elif... chains.
 
 The home page is on github at:
 
@@ -35,12 +36,12 @@ Start your code with this::
 
 Then register your overloaded functions::
 
-    @dispatch_on_value.add([1, 2, 3])  # Primitive type value 1 is the matching pattern
+    @dispatch_on_value.add([1, 2, 3])
     def _(a):
         assert a == [1, 2, 3]
         # Do something
 
-    @dispatch_on_value.add([4, 5, 6])  # Primitive type value 2 is the matching pattern
+    @dispatch_on_value.add([4, 5, 6])
     def _(a):
         assert a == [4, 5, 6]
         # Do something
@@ -48,7 +49,7 @@ Then register your overloaded functions::
 Then later, call the correct overloaded functions::
 
     p = [4, 5, 6]
-    dispatch_on_value.dispatch(p)  # Will call second function above
+    dispatch_on_value.dispatch(p)  # Should call second function above
 
 The return value is True or False, depending upon whether a function
 could be matched and called.
@@ -95,7 +96,7 @@ Some quick examples
 
 4. You can pass as many extra parameters as you want when dispatching::
 
-    @dispatch_on_value.add([1, 2])  # This is the matching pattern
+    @dispatch_on_value.add([1, 2])
     def _(a, my_abc, my_def):
         assert a == [1, 2]
         # Do something
