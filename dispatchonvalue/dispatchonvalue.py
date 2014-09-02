@@ -51,13 +51,13 @@ class DispatchOnValue(object):
 
     def add(self, pattern):
         """Decorator to add new dispatch functions."""
-        copy_of_parent_class = self
+        self_of_parent = self
 
         def wrap(f):
             def wrapped_f(*args):
                 f(*args)
 
-            copy_of_parent_class.functions.append((f, pattern))
+            self_of_parent.functions.append((f, pattern))
             return wrapped_f
 
         return wrap
