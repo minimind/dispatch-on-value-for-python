@@ -3,10 +3,11 @@ Dispatch on Value for Python
 ============================
 
 This package provides dispatch on value complex for arbitrarily nested lists and
-dictionaries. You can use ``lambda`` to do expression matching and an ``any_\*``
+dictionaries. You can use ``lambda`` to do expression matching and an ``any_X``
 token that is a wildcard that ensures identical values can be matched. It
 is useful for getting rid of complicated and difficult to read
-``if...elif...elif... chains``.
+``if...elif...elif...`` chains. The package also allows the creation of
+dynamic patterns.
 
 The home page is on github at:
 
