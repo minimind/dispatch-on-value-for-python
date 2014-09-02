@@ -2,12 +2,15 @@
 Dispatch on Value for Python
 ============================
 
-This package provides dispatch on values for arbitrarily nested lists and
-dictionaries. You can use ``lambda`` to do expression matching and an ``any_X``
-token that is a wildcard that ensures identical values can be matched. It
-is useful for getting rid of complicated and difficult to read
-``if...elif...elif...`` chains. The package also allows the creation of
-dynamic patterns.
+This package provides the ability to dispatch on values (as opposed to dispatch
+on types) for nested lists, dictionaries, and primitive types (basically all
+inbuilt types). You can use ``lambda`` to do expression matching and use a
+wildcard to ensure identical values can be matched (see ``any_a``). It can
+alleviate complicated and difficult to read ``if...elif...elif...`` chains and
+greatly reduce the amount of code written.
+
+Additionally, patterns can be registered dynamically, allowing a great flexibility
+in which functions are called with which value.
 
 The home page is on github at:
 
@@ -21,7 +24,7 @@ Unit tests can be run from the source directory using::
 
     python -m unittest discover -s test
 
-Any queries and comments are welcome and can be sent to me at:
+Any queries and comments are welcome. Send them to:
 
 ian.macinnes@gmail.com
 
@@ -29,31 +32,34 @@ ian.macinnes@gmail.com
 Quick guide
 ***********
 
-Start your code with this::
+First you need to register your dispatch methods, also side the pattern they
+should match on.
+
+::
 
     import dispatchonvalue as dv
 
     dispatch_on_value = dv.DispatchOnValue()
 
-Then register your overloaded functions::
-
-    @dispatch_on_value.add([1, 2, 3])
+    # Register your overloaded functions:
+    @dispatch_on_value.add([1, 2, 3])  # [1, 2, 3] is the pattern to match on
     def _(a):
         assert a == [1, 2, 3]
         # Do something
 
-    @dispatch_on_value.add([4, 5, 6])
+    @dispatch_on_value.add([4, 5, 6])  # [4, 5, 6] is the pattern to match on
     def _(a):
         assert a == [4, 5, 6]
         # Do something
 
-Then later, call the correct overloaded functions::
+Then else where in your code, dispatch to the correct function based on the
+value of the parameter passed::
 
     p = [4, 5, 6]
-    dispatch_on_value.dispatch(p)  # Should call second function above
+    dispatch_on_value.dispatch(p)  # Will call second function above
 
 The return value is ``True`` or ``False``, depending upon whether a function
-could be matched and called.
+could be matched, dispatched, and called.
 
 *******************
 Some quick examples
@@ -62,7 +68,8 @@ Some quick examples
 Multiple dispatch on value
 ==========================
 
-::
+The simplest use is to dispatch on fixed values. Here we dispatch to two
+different functions ``fn_1`` and ``fn_2`` depending upon the value of ``p``::
 
     @dispatch_on_value.add([1, 2, 3])
     def fn_1(a):
@@ -141,9 +148,8 @@ Matching on dictionaries is either partial or strict
 ****************************************************
 
 Matching on directories is partial by default. This means dictionaries will
-match if all the key/value pairs in the pattern are matched - any extra pairs
-will be ignored. You can ensure the dictionaries are exactly the same by using
-``dispatch_strict()`` rather than ``dispatch()``. For example::
+match if the key/value pairs in the pattern are matched - any extra pairs in
+the value passed will be ignored. For example::
 
     @dispatch_on_value.add({'name': 'john', 'age': 32})
     def _(a):
@@ -152,6 +158,9 @@ will be ignored. You can ensure the dictionaries are exactly the same by using
     # These will match because they contain the minimal dictionary items
     dispatch_on_value.dispatch({'name': 'john', 'age': 32})
     dispatch_on_value.dispatch({'name': 'john', 'age': 32, 'sex': 'male'})
+
+You can ensure dictionaries have to be exactly the same when matched by using
+``dispatch_strict()`` rather than ``dispatch()``. For example::
 
     # This will match because it's strict and the pattern is exactly the same
     dispatch_on_value.dispatch_strict({'name': 'john', 'age': 32})
