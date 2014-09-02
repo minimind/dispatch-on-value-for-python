@@ -59,7 +59,7 @@ Some quick examples
 *******************
 
 Multiple dispatch on value
---------------------------
+==========================
 
 ::
 
@@ -83,14 +83,14 @@ Multiple dispatch on value
     dispatch_on_value.dispatch(p)  # This will not call anything and return False
 
 Data structure patterns can be arbitrary nested
------------------------------------------------
+===============================================
 
 ::
 
     @dispatch_on_value.add({'one': 3, 'animals': ['frog', 'mouse']})
 
 Wildcards
----------
+=========
 
 Use of wildcard tokens ``any_a``, ``any_b``, ... ``any_z`` that will ensure values are identical. e.g.
 
@@ -105,7 +105,7 @@ Use of wildcard tokens ``any_a``, ``any_b``, ... ``any_z`` that will ensure valu
     dispatch_on_value.dispatch(['c', 'b', 3, [3, 'd', 'f']])  # This will not match
 
 Insert Lambda for wide expression of patterns 
----------------------------------------------
+=============================================
 
 Use ``lambda``'s as part of the pattern matching
 
@@ -130,7 +130,7 @@ Another example
    dispatch_on_value.dispatch(['a', 2, 's'])  # This will not match
 
 No limit on parameters
-----------------------
+======================
 
 You can pass as many extra parameters as you want when dispatching::
 
