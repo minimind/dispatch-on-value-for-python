@@ -9,7 +9,7 @@ setup(
     url='https://github.com/minimind/dispatch-on-value-for-python',
     license='MIT',
     description='Python package providing dispatch on values for ' +
-                'arbitrarily nested lists and dictionary data structures.',
+                'builtin types such as nested lists and dictionaries.',
     long_description=open('README.rst').read(),
     classifiers=[
         'Development Status :: 4 - Beta',

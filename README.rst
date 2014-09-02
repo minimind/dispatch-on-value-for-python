@@ -32,7 +32,7 @@ ian.macinnes@gmail.com
 Quick guide
 ***********
 
-First you need to register your dispatch methods, also side the pattern they
+First you need to register your dispatch methods, alongside the pattern they
 should match on.
 
 ::
@@ -59,7 +59,7 @@ value of the parameter passed::
     dispatch_on_value.dispatch(p)  # Will call second function above
 
 The return value is ``True`` or ``False``, depending upon whether a function
-could be matched, dispatched, and called.
+was matched, dispatched, and called.
 
 *******************
 Some quick examples
@@ -134,7 +134,7 @@ Use of wildcard tokens ``any_a``, ``any_b``, ... ``any_z`` can ensure values are
 No limit on parameters
 ======================
 
-You can pass as many extra parameters as you want when dispatching::
+Pass as many extra parameters as you want when dispatching::
 
     @dispatch_on_value.add([1, 2])
     def _(a, my_abc, my_def):
@@ -147,7 +147,7 @@ You can pass as many extra parameters as you want when dispatching::
 Matching on dictionaries is either partial or strict
 ****************************************************
 
-Matching on directories is partial by default. This means dictionaries will
+Matching on directories is *partial* by default. This means dictionaries will
 match if the key/value pairs in the pattern are matched - any extra pairs in
 the value passed will be ignored. For example::
 
