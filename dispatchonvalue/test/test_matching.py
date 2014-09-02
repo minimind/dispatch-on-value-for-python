@@ -92,8 +92,8 @@ class TestMatching(unittest.TestCase):
         assert not matched
 
     def test_tuple1(self):
-        stream = (1,2)
-        pattern = (1,2)
+        stream = (1, 2)
+        pattern = (1, 2)
         (matched, stream_found) = self.dispatch_on_value._match(
             stream, pattern, {'strict': False}
         )
@@ -101,16 +101,16 @@ class TestMatching(unittest.TestCase):
         assert stream == stream_found
 
     def test_tuple2(self):
-        stream = (1,2)
-        pattern = (1,3)
+        stream = (1, 2)
+        pattern = (1, 3)
         (matched, stream_found) = self.dispatch_on_value._match(
             stream, pattern, {'strict': False}
         )
         assert not matched
 
     def test_tuple3(self):
-        stream = (1,2)
-        pattern = (1,2,3)
+        stream = (1, 2)
+        pattern = (1, 2, 3)
         (matched, stream_found) = self.dispatch_on_value._match(
             stream, pattern, {'strict': False}
         )

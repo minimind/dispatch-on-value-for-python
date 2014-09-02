@@ -3,6 +3,7 @@ import dispatchonvalue as dv
 
 
 class TestExamples(unittest.TestCase):
+
     def test_example1(self):
         called = [0]
 
