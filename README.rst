@@ -29,9 +29,12 @@ Any queries and comments are welcome. Send them to:
 
 ian.macinnes@gmail.com
 
-***********
-Quick guide
-***********
+*****
+Guide
+*****
+
+Very quick example
+==================
 
 First register your dispatch methods, alongside the pattern they should match on::
 
@@ -59,8 +62,8 @@ value of the parameter passed::
 The return value is ``True`` or ``False``, depending upon whether a function
 was matched, dispatched, and called.
 
-Some quick examples
-===================
+Features
+========
 
 Multiple dispatch on value
 --------------------------

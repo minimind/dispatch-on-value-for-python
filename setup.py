@@ -8,7 +8,7 @@ setup(
     packages=['dispatchonvalue', 'dispatchonvalue.test'],
     url='https://github.com/minimind/dispatch-on-value-for-python',
     license='MIT',
-    description='Provides the ability to dispatch on values using pattern'
+    description='Provides the ability to dispatch on values using pattern '
                 'matching on complex, nested data structures containing '
                 'lists, dictionaries and primitive types',
     long_description=open('README.rst').read(),
