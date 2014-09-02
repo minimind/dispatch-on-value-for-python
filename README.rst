@@ -93,22 +93,9 @@ different functions ``fn_1`` and ``fn_2`` depending upon the value of ``p``::
 Data structure patterns can be arbitrary nested
 ===============================================
 
-::
+The patterns can be as complex as you like::
 
-    @dispatch_on_value.add({'one': 3, 'animals': ['frog', 'mouse']})
-
-Wildcards
-=========
-
-Use of wildcard tokens ``any_a``, ``any_b``, ... ``any_z`` that will ensure values are identical. e.g.::
-
-    @dispatch_on_value.add([dv.any_a, 'b', 3, [3, 'd', dv.any_a]])
-    def _(a):
-        # Do something
-    
-    dispatch_on_value.dispatch(['c', 'b', 3, [3, 'd', 'c']])  # This will match
-    dispatch_on_value.dispatch(['f', 'b', 3, [3, 'd', 'f']])  # This will match
-    dispatch_on_value.dispatch(['c', 'b', 3, [3, 'd', 'f']])  # This will not match
+    @dispatch_on_value.add({'one': 3, 'animals': ['frog', 'mouse', 34]})
 
 Insert Lambda for wide expression of patterns 
 =============================================
@@ -130,6 +117,19 @@ Another example::
 
    dispatch_on_value.dispatch(['a', 2, 'c'])  # This will match
    dispatch_on_value.dispatch(['a', 2, 's'])  # This will not match
+
+Wildcards
+=========
+
+Use of wildcard tokens ``any_a``, ``any_b``, ... ``any_z`` can ensure values are identical. e.g.::
+
+    @dispatch_on_value.add([dv.any_a, 'b', 3, [3, 'd', dv.any_a]])
+    def _(a):
+        # Do something
+    
+    dispatch_on_value.dispatch(['c', 'b', 3, [3, 'd', 'c']])  # This will match
+    dispatch_on_value.dispatch(['f', 'b', 3, [3, 'd', 'f']])  # This will match
+    dispatch_on_value.dispatch(['c', 'b', 3, [3, 'd', 'f']])  # This will not match
 
 No limit on parameters
 ======================
