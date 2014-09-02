@@ -92,9 +92,7 @@ Data structure patterns can be arbitrary nested
 Wildcards
 =========
 
-Use of wildcard tokens ``any_a``, ``any_b``, ... ``any_z`` that will ensure values are identical. e.g.
-
-::
+Use of wildcard tokens ``any_a``, ``any_b``, ... ``any_z`` that will ensure values are identical. e.g.::
 
     @dispatch_on_value.add([dv.any_a, 'b', 3, [3, 'd', dv.any_a]])
     def _(a):
@@ -107,9 +105,7 @@ Use of wildcard tokens ``any_a``, ``any_b``, ... ``any_z`` that will ensure valu
 Insert Lambda for wide expression of patterns 
 =============================================
 
-Use ``lambda``'s as part of the pattern matching
-
-::
+Use ``lambda``'s as part of the pattern matching::
 
    @dispatch_on_value.add([1, 2, lambda x: 3 < x < 7, 'hello'])
    def _(a):
@@ -118,9 +114,7 @@ Use ``lambda``'s as part of the pattern matching
    dispatch_on_value.dispatch([1, 2, 4, 'hello'])  # This will match
    dispatch_on_value.dispatch([1, 2, 2, 'hello'])  # This will not match
 
-Another example
-
-::
+Another example::
 
    @dispatch_on_value.add(['a', 2, lambda x: x == 'b' or x == 'c'])
    def _(a):
@@ -133,8 +127,6 @@ No limit on parameters
 ======================
 
 You can pass as many extra parameters as you want when dispatching::
-
-::
 
     @dispatch_on_value.add([1, 2])
     def _(a, my_abc, my_def):
