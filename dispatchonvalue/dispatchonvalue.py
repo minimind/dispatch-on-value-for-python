@@ -94,7 +94,7 @@ class DispatchOnValue(object):
             try:
                 return self.compare_dictionaries(stream, pattern, context)
 
-            except AttributeError:
+            except (AttributeError, TypeError):
                 # Maybe a string or a list?
                 try:
                     # I hate to add an isinstance here but I can't see

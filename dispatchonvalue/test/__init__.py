@@ -1,1 +1,1 @@
-__all__ = ['TestBasicMatching', 'TestBasicDispatching']
+__all__ = ['TestMatching', 'TestExamples']

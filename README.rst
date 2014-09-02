@@ -37,12 +37,12 @@ Then register your overloaded functions::
 
     @dispatch_on_value.add([1, 2, 3])  # Primitive type value 1 is the matching pattern
     def _(a):
-        assert a == 1
+        assert a == [1, 2, 3]
         # Do something
 
     @dispatch_on_value.add([4, 5, 6])  # Primitive type value 2 is the matching pattern
     def _(a):
-        assert a == 2
+        assert a == [4, 5, 6]
         # Do something
 
 Then later, call the correct overloaded functions::
@@ -61,12 +61,12 @@ Some quick examples
 
         @dispatch_on_value.add([1, 2, 3])
         def fn_1(a):
-            assert a = [1, 2, 3]
+            assert a == [1, 2, 3]
             # Do something
     
         @dispatch_on_value.add([4, 5, 6])
         def fn_2(a):
-            assert a = [4, 5, 6]
+            assert a == [4, 5, 6]
             # Do something
     
         p = [1, 2, 3]
@@ -83,13 +83,14 @@ Some quick examples
         @dispatch_on_value.add({'one': 3, 'animals': ['frog', 'mouse']})
 
 3. Use of wildcard tokens any_a, any_b, ... any_z that will ensure
-values are identical. e.g.::
+   values are identical. e.g.::
 
         @dispatch_on_value.add([dv.any_a, 'b', 3, [3, 'd', dv.any_a]])
         def _(a):
             # Do something
         
         dispatch_on_value.dispatch(['c', 'b', 3, [3, 'd', 'c']])  # This will match
+        dispatch_on_value.dispatch(['f', 'b', 3, [3, 'd', 'f']])  # This will match
         dispatch_on_value.dispatch(['c', 'b', 3, [3, 'd', 'f']])  # This will not match
 
 4. You can pass as many extra parameters as you want when dispatching::
@@ -99,7 +100,7 @@ values are identical. e.g.::
         assert a == [1, 2]
         # Do something
     
-    dispatchOnValue.dispatch([1, 2], 'abc', 'def')
+    dispatch_on_value.dispatch([1, 2], 'abc', 'def')
 
 5. Use lambda's as part of the pattern matching::
 
@@ -131,8 +132,6 @@ dispatch_strict() rather than dispatch(). For example::
     @dispatch_on_value.add({'name': 'john', 'age': 32})
     def _(a):
         # Do something
-
-    dict1 = {'name': 'john', 'age': 32}
 
     # These will match because they contain the minimal dictionary items
     dispatch_on_value.dispatch({'name': 'john', 'age': 32})

@@ -2,7 +2,7 @@ import unittest
 import dispatchonvalue as dv
 
 
-class TestBasicMatching(unittest.TestCase):
+class TestMatching(unittest.TestCase):
     def setUp(self):
         self.dispatch_on_value = dv.DispatchOnValue()
 
