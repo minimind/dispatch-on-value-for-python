@@ -10,7 +10,7 @@ alleviate complicated and difficult to read ``if...elif...elif...`` chains and
 greatly reduce the amount of code written.
 
 Additionally, patterns can be registered dynamically, allowing a great flexibility
-in which functions are called with which value.
+in determining which functions are called on which values.
 
 The home page is on github at:
 
