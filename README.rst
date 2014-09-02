@@ -8,8 +8,7 @@ matching to dispatch on complex, nested data structures containing lists,
 dictionaries and primitive types. You can use ``lambda`` to do expression
 matching and utilise wildcard parameters to ensure identical values can be
 matched (see ``any_a``). It can alleviate complicated and difficult to read
-``if ... elif ... elif ...`` chains and simplify the code needing to be
-written.
+``if ... elif ... elif ...`` chains and simplify the code.
 
 Value patterns can be registered dynamically, allowing a great flexibility
 in determining which functions are called on which value patterns.
@@ -60,12 +59,11 @@ value of the parameter passed::
 The return value is ``True`` or ``False``, depending upon whether a function
 was matched, dispatched, and called.
 
-*******************
 Some quick examples
-*******************
+===================
 
 Multiple dispatch on value
-==========================
+--------------------------
 
 The simplest use is to dispatch on fixed values. Here we dispatch to two
 different functions ``fn_1`` and ``fn_2`` depending upon the value of ``p``::
@@ -90,14 +88,14 @@ different functions ``fn_1`` and ``fn_2`` depending upon the value of ``p``::
     dispatch_on_value.dispatch(p)  # This will not call anything and return False
 
 Data structure patterns can be arbitrary nested
-===============================================
+-----------------------------------------------
 
 The patterns can be as complex and as nested as you like::
 
     @dispatch_on_value.add({'one': 3, 'animals': ['frog', 'mouse', 34]})
 
 Insert Lambda for wide expression of patterns 
-=============================================
+---------------------------------------------
 
 Use ``lambda``'s as part of the pattern matching::
 
@@ -117,8 +115,8 @@ Another example::
    dispatch_on_value.dispatch(['a', 2, 'c'])  # This will match
    dispatch_on_value.dispatch(['a', 2, 's'])  # This will not match
 
-Wildcards
-=========
+Wildcard parameters
+-------------------
 
 Use of wildcard tokens ``any_a``, ``any_b``, ... ``any_z`` can ensure values are
 identical. e.g.::
@@ -132,7 +130,7 @@ identical. e.g.::
     dispatch_on_value.dispatch(['c', 'b', 3, [3, 'd', 'f']])  # This will not match
 
 No limit on parameters
-======================
+----------------------
 
 Pass as many extra parameters as you want when dispatching::
 
@@ -143,9 +141,8 @@ Pass as many extra parameters as you want when dispatching::
     
     dispatch_on_value.dispatch([1, 2], 'abc', 'def')
 
-****************************************************
 Matching on dictionaries is either partial or strict
-****************************************************
+====================================================
 
 Matching on directories is *partial* by default. This means dictionaries will
 match if the key/value pairs in the pattern are matched - any extra pairs in
