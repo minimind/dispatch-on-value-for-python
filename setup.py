@@ -8,8 +8,9 @@ setup(
     packages=['dispatchonvalue', 'dispatchonvalue.test'],
     url='https://github.com/minimind/dispatch-on-value-for-python',
     license='MIT',
-    description='Provides the ability to dispatch on values for ' +
-                'builtin types such as nested lists and dictionaries.',
+    description='Provides the ability to dispatch on values in a flexible and ' +
+                'extensible fashion for various builtin types such as nested ' +
+                'lists and dictionaries.',
     long_description=open('README.rst').read(),
     classifiers=[
         'Development Status :: 4 - Beta',
