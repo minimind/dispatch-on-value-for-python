@@ -2,15 +2,17 @@
 Dispatch on Value for Python
 ============================
 
-This package provides the ability to dispatch on values (as opposed to dispatch
-on types) for nested lists, dictionaries, and primitive types. You can use 
-``lambda`` to do expression matching and use a wildcard to ensure identical
-values can be matched (see ``any_a``). It can alleviate complicated and
-difficult to read ``if ... elif ... elif ...`` chains and greatly reduce the amount
-of code written.
+This package provides the ability to dispatch on values (as opposed to
+dispatching on types) by pairing functions with patterns. It uses pattern
+matching to dispatch on complex, nested data structures containing lists,
+dictionaries and primitive types. You can use ``lambda`` to do expression
+matching and use wildcards to ensure identical values can be matched (see
+``any_a``). It can alleviate complicated and difficult to read
+``if ... elif ... elif ...`` chains and dramatically simplify the code that
+needs to be written.
 
-Additionally, patterns can be registered dynamically, allowing a great flexibility
-in determining which functions are called on which values.
+Value patterns can be registered dynamically, allowing a great flexibility
+in determining which functions are called on which value patterns.
 
 The home page is on github at:
 
@@ -32,10 +34,7 @@ ian.macinnes@gmail.com
 Quick guide
 ***********
 
-First you need to register your dispatch methods, alongside the pattern they
-should match on.
-
-::
+First register your dispatch methods, alongside the pattern they should match on::
 
     import dispatchonvalue as dv
 
