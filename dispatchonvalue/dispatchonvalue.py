@@ -42,6 +42,15 @@ any_y = AnyValue(25)
 any_z = AnyValue(26)
 
 
+class AllValue(object):
+    """Specify the entire iterable must match the single pattern"""
+    def __init__(self, pattern):
+        self.pattern = pattern
+
+
+def all_match(p):
+    return AllValue(p)
+
 class DispatchOnValue(object):
     """Provide dispatch on value for complex arbitrarily nested lists and
     dictionaries."""
@@ -73,7 +82,7 @@ class DispatchOnValue(object):
         """
         for t in self.functions:
             (matched, matched_stream) = self._match(
-                stream, t[1], {'strict': False}
+                stream, t[1], {}
             )
             if matched:
                 f = t[0]
@@ -110,7 +119,12 @@ class DispatchOnValue(object):
                 return True, stream
 
         try:
-            # First, is it callable?
+            if isinstance(pattern, AllValue):
+                new_context = context.copy()
+                new_context['single_pattern'] = True
+                return self._compare_lists(stream, pattern.pattern, new_context)
+
+            # Is it callable?
             return pattern(stream), stream
 
         except TypeError:
@@ -145,13 +159,21 @@ class DispatchOnValue(object):
     def _compare_lists(self, stream, pattern, context):
         # We compare each item in the list. If they all match, then we have
         # a match.
-        if not len(stream) == len(pattern):
-            return False, []
-
-        for s, p in itertools.izip(stream, pattern):
-            (matched, matched_stream) = self._match(s, p, context)
-            if not matched:
+        if 'single_pattern' in context and context['single_pattern']:
+            for s in stream:
+                new_context = context.copy()
+                del new_context['single_pattern']
+                (matched, matched_stream) = self._match(s, pattern, new_context)
+                if not matched:
+                    return False, []
+        else:
+            if not len(stream) == len(pattern):
                 return False, []
+
+            for s, p in itertools.izip(stream, pattern):
+                (matched, matched_stream) = self._match(s, p, context)
+                if not matched:
+                    return False, []
 
         return True, stream
 
