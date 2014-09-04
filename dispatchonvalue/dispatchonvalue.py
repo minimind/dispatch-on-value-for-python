@@ -82,7 +82,7 @@ class DispatchOnValue(object):
         """
         for t in self.functions:
             (matched, matched_stream) = self._match(
-                stream, t[1], {}
+                stream, t[1], {}, {}
             )
             if matched:
                 f = t[0]
@@ -101,7 +101,7 @@ class DispatchOnValue(object):
         """
         for t in self.functions:
             (matched, matched_stream) = self._match(
-                stream, t[1], {'strict': True}
+                stream, t[1], {'strict': True}, {}
             )
             if matched:
                 f = t[0]
@@ -110,19 +110,20 @@ class DispatchOnValue(object):
 
         return False
 
-    def _match(self, stream, pattern, context):
+    def _match(self, stream, pattern, context, any_values):
         if isinstance(pattern, AnyValue):
-            if pattern.num in context:
-                return context[pattern.num] == stream, stream
+            if pattern.num in any_values:
+                return any_values[pattern.num] == stream, stream
             else:
-                context[pattern.num] = stream
+                any_values[pattern.num] = stream
                 return True, stream
 
         try:
             if isinstance(pattern, AllValue):
                 new_context = context.copy()
                 new_context['single_pattern'] = True
-                return self._compare_lists(stream, pattern.pattern, new_context)
+                return self._compare_lists(stream, pattern.pattern,
+                                           new_context, any_values)
 
             # Is it callable?
             return pattern(stream), stream
@@ -133,7 +134,8 @@ class DispatchOnValue(object):
 
             try:
                 # OK, we'll assume it's a dictionary
-                return self._compare_dictionaries(stream, pattern, context)
+                return self._compare_dictionaries(stream, pattern,
+                                                  context, any_values)
 
             except (AttributeError, TypeError):
                 # Maybe a string or a list?
@@ -143,7 +145,8 @@ class DispatchOnValue(object):
                     if isinstance(stream, basestring):
                         return self._compare_primitives(stream, pattern)
                     else:
-                        return self._compare_lists(stream, pattern, context)
+                        return self._compare_lists(stream, pattern,
+                                                   context, any_values)
 
                 except TypeError:
                     # Have to assume primitives
@@ -156,14 +159,15 @@ class DispatchOnValue(object):
         else:
             return False, []
 
-    def _compare_lists(self, stream, pattern, context):
+    def _compare_lists(self, stream, pattern, context, any_values):
         # We compare each item in the list. If they all match, then we have
         # a match.
         if 'single_pattern' in context and context['single_pattern']:
             for s in stream:
                 new_context = context.copy()
                 del new_context['single_pattern']
-                (matched, matched_stream) = self._match(s, pattern, new_context)
+                (matched, matched_stream) = self._match(s, pattern,
+                                                        new_context, any_values)
                 if not matched:
                     return False, []
         else:
@@ -171,13 +175,14 @@ class DispatchOnValue(object):
                 return False, []
 
             for s, p in itertools.izip(stream, pattern):
-                (matched, matched_stream) = self._match(s, p, context)
+                (matched, matched_stream) = self._match(s, p, context,
+                                                        any_values)
                 if not matched:
                     return False, []
 
         return True, stream
 
-    def _compare_dictionaries(self, stream, pattern, context):
+    def _compare_dictionaries(self, stream, pattern, context, any_values):
         if 'strict' in context and context['strict']:
             if not len(stream) == len(pattern):
                 return False, []
@@ -187,7 +192,7 @@ class DispatchOnValue(object):
                 return False, []
 
             s = stream[k]
-            (matched, matched_stream) = self._match(s, v, context)
+            (matched, matched_stream) = self._match(s, v, context, any_values)
             if not matched:
                 return False, []
 

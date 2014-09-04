@@ -132,6 +132,62 @@ identical. e.g.::
     dispatch_on_value.dispatch(['f', 'b', 3, [3, 'd', 'f']])  # This will match
     dispatch_on_value.dispatch(['c', 'b', 3, [3, 'd', 'f']])  # This will not match
 
+Match everything in a list with single token
+------------------------------------------
+
+Use the ``all_same`` token to see if all the items in a list match, e.g.::
+
+    @dispatch_on_value.add(['a', dv.all_same(4)])
+    def _(a):
+        # Do something
+
+    # This will match as the nested list contains all fours
+    dispatch_on_value.dispatch(['a', [4,4,4,4,4,4,4]])
+
+You can combine them with the ``any_X`` token::
+
+   @dispatch_on_value.add(['a', dv.all_same(dv.any_a)])
+    def _(a):
+        # Do something
+
+    # These will match as the nested list contains all the same values
+    dispatch_on_value.dispatch(['a', [4,4,4,4,4,4,4]])
+    dispatch_on_value.dispatch(['a', [5,5,5]])
+    
+    # This won't match
+    dispatch_on_value.dispatch(['a', [1,2,3]])
+
+These examples are simplistic but a more complex example might be::
+
+    @dispatch_on_value.add(dv.all_same({'age': 32}))
+    def _(a):
+        # Do something
+        
+    # This would match since all the items in the list have the same age
+    dispatch_on_value.dispatch([{'name': 'john', 'age': 32},
+                                {'hair': 'brown', 'age': 32, 'car': 'lada'}])
+    
+    # This wouldn't match since the ages are different
+    dispatch_on_value.dispatch([{'name': 'john', 'age': 32},
+                                {'name': 'john', 'age': 9}])
+
+# Another example::
+
+    # Match on a list of dictionaries where the name is 'john' and the
+    # age is between 30 and 40
+    @dispatch_on_value.add(dv.all_same({'name': 'john',
+                                        'age': lamba x: 30 < x < 40})
+    def _(a):
+        # Do something
+
+    # This would match
+    dispatch_on_value.dispatch([{'name': 'john', 'age': 32},
+                                {'name': 'john', 'age': 37}])
+    
+    # This would not match
+    dispatch_on_value.dispatch([{'name': 'john', 'age': 32},
+                                {'name': 'john', 'age': 45}])
+
 No limit on parameters
 ----------------------
 

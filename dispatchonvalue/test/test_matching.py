@@ -10,7 +10,7 @@ class TestMatching(unittest.TestCase):
         stream = 3
         pattern = 3
         (matched, stream_found) = self.dispatch_on_value._match(
-            stream, pattern, {'strict': False}
+            stream, pattern, {'strict': False}, {}
         )
         assert matched
         assert stream == stream_found
@@ -19,7 +19,7 @@ class TestMatching(unittest.TestCase):
         stream = 3
         pattern = 4
         (matched, stream_found) = self.dispatch_on_value._match(
-            stream, pattern, {'strict': False}
+            stream, pattern, {'strict': False}, {}
         )
         assert not matched
 
@@ -27,7 +27,7 @@ class TestMatching(unittest.TestCase):
         stream = 3
         pattern = '3'
         (matched, stream_found) = self.dispatch_on_value._match(
-            stream, pattern, {'strict': False}
+            stream, pattern, {'strict': False}, {}
         )
         assert not matched
 
@@ -35,7 +35,7 @@ class TestMatching(unittest.TestCase):
         stream = '3km'
         pattern = '3km'
         (matched, stream_found) = self.dispatch_on_value._match(
-            stream, pattern, {'strict': False}
+            stream, pattern, {'strict': False}, {}
         )
         assert matched
         assert stream == stream_found
@@ -44,7 +44,7 @@ class TestMatching(unittest.TestCase):
         stream = [4]
         pattern = [4]
         (matched, stream_found) = self.dispatch_on_value._match(
-            stream, pattern, {'strict': False}
+            stream, pattern, {'strict': False}, {}
         )
         assert matched
         assert stream == stream_found
@@ -53,7 +53,7 @@ class TestMatching(unittest.TestCase):
         stream = [4]
         pattern = [5]
         (matched, stream_found) = self.dispatch_on_value._match(
-            stream, pattern, {'strict': False}
+            stream, pattern, {'strict': False}, {}
         )
         assert not matched
 
@@ -61,7 +61,7 @@ class TestMatching(unittest.TestCase):
         stream = [4, 5]
         pattern = [4, 5]
         (matched, stream_found) = self.dispatch_on_value._match(
-            stream, pattern, {'strict': False}
+            stream, pattern, {'strict': False}, {}
         )
         assert matched
         assert stream == stream_found
@@ -70,7 +70,7 @@ class TestMatching(unittest.TestCase):
         stream = [4, 5]
         pattern = [4, 6]
         (matched, stream_found) = self.dispatch_on_value._match(
-            stream, pattern, {'strict': False}
+            stream, pattern, {'strict': False}, {}
         )
         assert not matched
 
@@ -78,7 +78,7 @@ class TestMatching(unittest.TestCase):
         stream = [4, 5, [6, 7]]
         pattern = [4, 5, [6, 7]]
         (matched, stream_found) = self.dispatch_on_value._match(
-            stream, pattern, {'strict': False}
+            stream, pattern, {'strict': False}, {}
         )
         assert matched
         assert stream == stream_found
@@ -87,7 +87,7 @@ class TestMatching(unittest.TestCase):
         stream = [4, 5, [6, 7]]
         pattern = [4, 5, [6, 8]]
         (matched, stream_found) = self.dispatch_on_value._match(
-            stream, pattern, {'strict': False}
+            stream, pattern, {'strict': False}, {}
         )
         assert not matched
 
@@ -95,7 +95,7 @@ class TestMatching(unittest.TestCase):
         stream = (1, 2)
         pattern = (1, 2)
         (matched, stream_found) = self.dispatch_on_value._match(
-            stream, pattern, {'strict': False}
+            stream, pattern, {'strict': False}, {}
         )
         assert matched
         assert stream == stream_found
@@ -104,7 +104,7 @@ class TestMatching(unittest.TestCase):
         stream = (1, 2)
         pattern = (1, 3)
         (matched, stream_found) = self.dispatch_on_value._match(
-            stream, pattern, {'strict': False}
+            stream, pattern, {'strict': False}, {}
         )
         assert not matched
 
@@ -112,7 +112,7 @@ class TestMatching(unittest.TestCase):
         stream = (1, 2)
         pattern = (1, 2, 3)
         (matched, stream_found) = self.dispatch_on_value._match(
-            stream, pattern, {'strict': False}
+            stream, pattern, {'strict': False}, {}
         )
         assert not matched
 
@@ -120,7 +120,7 @@ class TestMatching(unittest.TestCase):
         stream = 1
         pattern = lambda x: x == 1
         (matched, stream_found) = self.dispatch_on_value._match(
-            stream, pattern, {'strict': False}
+            stream, pattern, {'strict': False}, {}
         )
         assert matched
         assert stream == stream_found
@@ -129,7 +129,7 @@ class TestMatching(unittest.TestCase):
         stream = 3
         pattern = lambda x: 1 < x < 5
         (matched, stream_found) = self.dispatch_on_value._match(
-            stream, pattern, {'strict': False}
+            stream, pattern, {'strict': False}, {}
         )
         assert matched
         assert stream == stream_found
@@ -138,7 +138,7 @@ class TestMatching(unittest.TestCase):
         stream = 7
         pattern = lambda x: 1 < x < 5
         (matched, stream_found) = self.dispatch_on_value._match(
-            stream, pattern, {'strict': False}
+            stream, pattern, {'strict': False}, {}
         )
         assert not matched
 
@@ -146,7 +146,7 @@ class TestMatching(unittest.TestCase):
         stream = [1, 2, 3]
         pattern = [1, 2, lambda x: x == 3]
         (matched, stream_found) = self.dispatch_on_value._match(
-            stream, pattern, {'strict': False}
+            stream, pattern, {'strict': False}, {}
         )
         assert matched
         assert stream == stream_found
@@ -155,7 +155,7 @@ class TestMatching(unittest.TestCase):
         stream = [1, 2, 4]
         pattern = [1, 2, lambda x: x == 3]
         (matched, stream_found) = self.dispatch_on_value._match(
-            stream, pattern, {'strict': False}
+            stream, pattern, {'strict': False}, {}
         )
         assert not matched
 
@@ -163,7 +163,7 @@ class TestMatching(unittest.TestCase):
         stream = [1, 2, [4, 5]]
         pattern = [1, 2, [lambda x: x == 4, 5]]
         (matched, stream_found) = self.dispatch_on_value._match(
-            stream, pattern, {'strict': False}
+            stream, pattern, {'strict': False}, {}
         )
         assert matched
         assert stream == stream_found
@@ -172,7 +172,7 @@ class TestMatching(unittest.TestCase):
         stream = [1, 2, [4, 5]]
         pattern = [1, 2, [lambda x: x == 4, 4]]
         (matched, stream_found) = self.dispatch_on_value._match(
-            stream, pattern, {'strict': False}
+            stream, pattern, {'strict': False}, {}
         )
         assert not matched
 
@@ -180,7 +180,7 @@ class TestMatching(unittest.TestCase):
         stream = {'one': 1}
         pattern = {'one': 1}
         (matched, stream_found) = self.dispatch_on_value._match(
-            stream, pattern, {'strict': False}
+            stream, pattern, {'strict': False}, {}
         )
         assert matched
         assert stream == stream_found
@@ -189,7 +189,7 @@ class TestMatching(unittest.TestCase):
         stream = {'one': 1, 'two': 2}
         pattern = {'one': 1, 'two': 2}
         (matched, stream_found) = self.dispatch_on_value._match(
-            stream, pattern, {'strict': False}
+            stream, pattern, {'strict': False}, {}
         )
         assert matched
         assert stream == stream_found
@@ -198,7 +198,7 @@ class TestMatching(unittest.TestCase):
         stream = {'one': 1, 'two': 3}
         pattern = {'one': 1, 'two': 2}
         (matched, stream_found) = self.dispatch_on_value._match(
-            stream, pattern, {'strict': False}
+            stream, pattern, {'strict': False}, {}
         )
         assert not matched
 
@@ -206,7 +206,7 @@ class TestMatching(unittest.TestCase):
         stream = {'one': 1, 'two': 2}
         pattern = {'one': 1}
         (matched, stream_found) = self.dispatch_on_value._match(
-            stream, pattern, {'strict': False}
+            stream, pattern, {'strict': False}, {}
         )
         assert matched
         assert stream == stream_found
@@ -215,7 +215,7 @@ class TestMatching(unittest.TestCase):
         stream = {'one': 1}
         pattern = {'one': 1, 'two': 2}
         (matched, stream_found) = self.dispatch_on_value._match(
-            stream, pattern, {'strict': False}
+            stream, pattern, {'strict': False}, {}
         )
         assert not matched
 
@@ -223,7 +223,7 @@ class TestMatching(unittest.TestCase):
         stream = {'one': 1, 'list': [1, 2]}
         pattern = {'one': 1, 'list': [1, 2]}
         (matched, stream_found) = self.dispatch_on_value._match(
-            stream, pattern, {'strict': False}
+            stream, pattern, {'strict': False}, {}
         )
         assert matched
         assert stream == stream_found
@@ -232,7 +232,7 @@ class TestMatching(unittest.TestCase):
         stream = {'one': 1, 'list': [1, 2]}
         pattern = {'one': 1, 'list': [1, 3]}
         (matched, stream_found) = self.dispatch_on_value._match(
-            stream, pattern, {'strict': False}
+            stream, pattern, {'strict': False}, {}
         )
         assert not matched
 
@@ -240,7 +240,7 @@ class TestMatching(unittest.TestCase):
         stream = {'one': 1, 'num': 6}
         pattern = {'one': 1, 'num': lambda x: 3 < x < 9}
         (matched, stream_found) = self.dispatch_on_value._match(
-            stream, pattern, {'strict': False}
+            stream, pattern, {'strict': False}, {}
         )
         assert matched
         assert stream == stream_found
@@ -249,7 +249,7 @@ class TestMatching(unittest.TestCase):
         stream = {'one': 1, 'num': 10}
         pattern = {'one': 1, 'num': lambda x: 3 < x < 9}
         (matched, stream_found) = self.dispatch_on_value._match(
-            stream, pattern, {'strict': False}
+            stream, pattern, {'strict': False}, {}
         )
         assert not matched
 
@@ -257,7 +257,7 @@ class TestMatching(unittest.TestCase):
         stream = 1
         pattern = dv.any_a
         (matched, stream_found) = self.dispatch_on_value._match(
-            stream, pattern, {'strict': False}
+            stream, pattern, {'strict': False}, {}
         )
         assert matched
         assert stream == stream_found
@@ -266,7 +266,7 @@ class TestMatching(unittest.TestCase):
         stream = 2
         pattern = dv.any_a
         (matched, stream_found) = self.dispatch_on_value._match(
-            stream, pattern, {'strict': False}
+            stream, pattern, {'strict': False}, {}
         )
         assert matched
         assert stream == stream_found
@@ -275,7 +275,7 @@ class TestMatching(unittest.TestCase):
         stream = [1, 2]
         pattern = [dv.any_a, 2]
         (matched, stream_found) = self.dispatch_on_value._match(
-            stream, pattern, {'strict': False}
+            stream, pattern, {'strict': False}, {}
         )
         assert matched
         assert stream == stream_found
@@ -284,7 +284,7 @@ class TestMatching(unittest.TestCase):
         stream = [1, 2, 1]
         pattern = [dv.any_a, 2, dv.any_a]
         (matched, stream_found) = self.dispatch_on_value._match(
-            stream, pattern, {'strict': False}
+            stream, pattern, {'strict': False}, {}
         )
         assert matched
         assert stream == stream_found
@@ -293,7 +293,7 @@ class TestMatching(unittest.TestCase):
         stream = [1, 2, 2]
         pattern = [dv.any_a, 2, dv.any_a]
         (matched, stream_found) = self.dispatch_on_value._match(
-            stream, pattern, {'strict': False}
+            stream, pattern, {'strict': False}, {}
         )
         assert not matched
 
@@ -301,7 +301,7 @@ class TestMatching(unittest.TestCase):
         stream = [1, 2, 3, [1, 4, 5]]
         pattern = [dv.any_a, 2, 3, [dv.any_a, 4, 5]]
         (matched, stream_found) = self.dispatch_on_value._match(
-            stream, pattern, {'strict': False}
+            stream, pattern, {'strict': False}, {}
         )
         assert matched
         assert stream == stream_found
@@ -310,7 +310,7 @@ class TestMatching(unittest.TestCase):
         stream = [1, 2, 3, [2, 4, 5]]
         pattern = [dv.any_a, 2, 3, [dv.any_a, 4, 5]]
         (matched, stream_found) = self.dispatch_on_value._match(
-            stream, pattern, {'strict': False}
+            stream, pattern, {'strict': False}, {}
         )
         assert not matched
 
@@ -319,7 +319,7 @@ class TestMatching(unittest.TestCase):
         pattern = {'a': 1, 'b': dv.any_b,
                    'c': {'e': 3, 'd': dv.any_b}}
         (matched, stream_found) = self.dispatch_on_value._match(
-            stream, pattern, {'strict': False}
+            stream, pattern, {'strict': False}, {}
         )
         assert matched
         assert stream == stream_found
@@ -329,7 +329,7 @@ class TestMatching(unittest.TestCase):
         pattern = {'a': 1, 'b': dv.any_b,
                    'c': {'e': 3, 'd': dv.any_b}}
         (matched, stream_found) = self.dispatch_on_value._match(
-            stream, pattern, {'strict': False}
+            stream, pattern, {'strict': False}, {}
         )
         assert not matched
 
@@ -338,7 +338,7 @@ class TestMatching(unittest.TestCase):
         pattern = {'a': 1, 'b': dv.any_b,
                    'c': {'e': 3, 'd': dv.any_b}}
         (matched, stream_found) = self.dispatch_on_value._match(
-            stream, pattern, {'strict': False}
+            stream, pattern, {'strict': False}, {}
         )
         assert not matched
 
