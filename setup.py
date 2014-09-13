@@ -16,9 +16,12 @@ setup(
         'Development Status :: 4 - Beta',
         'License :: OSI Approved :: MIT License',
         'Intended Audience :: Developers',
-        'Programming Language :: Python :: 2 :: Only'
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 3',
     ],
     keywords=['dispatch on value', 'multiple dispatch', 'dynamic dispatch',
               'pattern matching', 'value patterns', 'patterns'],
-    include_package_data=True
+    include_package_data=True,
+    requires=['six'],
+    install_requires=['six >= 1.7.3'],
 )

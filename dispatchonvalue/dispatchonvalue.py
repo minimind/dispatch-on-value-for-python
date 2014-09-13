@@ -6,7 +6,8 @@ wildcard that ensures identical values can be matched. It is useful for getting
 rid of complicated and difficult to read if...elif...elif... chains.
 
 """
-import itertools
+import six
+from six.moves import zip
 
 
 class AnyValue(object):
@@ -142,7 +143,7 @@ class DispatchOnValue(object):
                 try:
                     # I hate to add an isinstance() here but I can't see
                     # how to lose it
-                    if isinstance(stream, basestring):
+                    if isinstance(stream, six.string_types):
                         return self._compare_primitives(stream, pattern)
                     else:
                         return self._compare_lists(stream, pattern,
@@ -174,7 +175,7 @@ class DispatchOnValue(object):
             if not len(stream) == len(pattern):
                 return False, []
 
-            for s, p in itertools.izip(stream, pattern):
+            for s, p in zip(stream, pattern):
                 (matched, matched_stream) = self._match(s, p, context,
                                                         any_values)
                 if not matched:
@@ -187,7 +188,7 @@ class DispatchOnValue(object):
             if not len(stream) == len(pattern):
                 return False, []
 
-        for k, v in pattern.iteritems():
+        for k, v in six.iteritems(pattern):
             if not k in stream:
                 return False, []
 
