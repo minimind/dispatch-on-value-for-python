@@ -133,7 +133,7 @@ identical. e.g.::
     dispatch_on_value.dispatch(['c', 'b', 3, [3, 'd', 'f']])  # This will not match
 
 Match everything in a list with single token
-------------------------------------------
+--------------------------------------------
 
 Use the ``all_same`` token to see if all the items in a list match, e.g.::
 
