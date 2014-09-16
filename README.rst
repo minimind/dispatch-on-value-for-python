@@ -223,3 +223,10 @@ You can ensure dictionaries have to be exactly the same when matched by using
 
     # This will not match because the dictionary doesn't match exactly
     dispatch_on_value.dispatch_strict({'name': 'john', 'age': 32, 'sex': 'male'})
+
+***********************
+Author and Contributors
+***********************
+
+Author: `minimind <https://github.com/minimind>`_.
+Contributor: `yurtaev <https://github.com/yurtaev>`_.

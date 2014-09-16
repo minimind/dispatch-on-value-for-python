@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='dispatchonvalue',
-    version='0.9.3',
+    version='0.9.4',
     author='Ian Macinnes',
     author_email='ian.macinnes@gmail.com',
     packages=['dispatchonvalue', 'dispatchonvalue.test'],
