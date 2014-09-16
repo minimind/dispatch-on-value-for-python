@@ -171,7 +171,7 @@ These examples are simplistic but a more complex example might be::
     dispatch_on_value.dispatch([{'name': 'john', 'age': 32},
                                 {'name': 'john', 'age': 9}])
 
-# Another example::
+Another example::
 
     # Match on a list of dictionaries where the name is 'john' and the
     # age is between 30 and 40
