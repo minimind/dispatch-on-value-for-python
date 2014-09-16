@@ -3,3 +3,4 @@ v0.9.1, 02/09/2014 -- Minor changes to beta.
 v0.9.2, 02/09/2014 -- Minor changes to README.
 v0.9.3, 02/09/2014 -- Added to README.
 v0.9.4, 16/09/2014 -- Python 3 compatibility
+v0.9.5, 16/09/2014 -- Documentation issue
