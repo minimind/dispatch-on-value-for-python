@@ -52,6 +52,7 @@ class AllValue(object):
 def all_match(p):
     return AllValue(p)
 
+
 class DispatchOnValue(object):
     """Provide dispatch on value for complex arbitrarily nested lists and
     dictionaries."""

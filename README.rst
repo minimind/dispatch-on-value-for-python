@@ -2,13 +2,13 @@
 Dispatch on Value for Python
 ============================
 
-This package provides the ability to dispatch on values (as opposed to
-dispatching on types) by pairing functions with patterns. It uses pattern
-matching to dispatch on complex, nested data structures containing lists,
-dictionaries and primitive types. You can use ``lambda`` to do expression
-matching and utilise wildcard parameters to ensure identical values can be
-matched (see ``any_a``). It can alleviate complicated and difficult to read
-``if ... elif ... elif ...`` chains and simplify the code.
+This Python 2.7/Python 3.x package provides the ability to dispatch on values
+(as opposed to dispatching on types) by pairing functions with patterns. It
+uses pattern matching to dispatch on complex, nested data structures containing
+lists, dictionaries and primitive types. You can use ``lambda`` to do
+expression matching and utilise wildcard parameters to ensure identical values
+can be matched (see ``any_a``). It can alleviate complicated and difficult to
+read ``if ... elif ... elif ...`` chains and simplify the code.
 
 Value patterns can be registered dynamically, allowing a great flexibility
 in determining which functions are called on which value patterns.
