@@ -80,10 +80,9 @@ class DispatchOnValue(object):
         pairs will be ignored.
 
         """
-        for t in self.functions:
-            matched, matched_stream = self._match(stream, t[1], {}, {})
+        for f, pat in self.functions:
+            matched, matched_stream = self._match(stream, pat, {}, {})
             if matched:
-                f = t[0]
                 f(matched_stream, *args)
                 return True
 
@@ -97,11 +96,10 @@ class DispatchOnValue(object):
         match if they are exactly the same.
 
         """
-        for t in self.functions:
-            matched, matched_stream = self._match(stream, t[1], 
+        for f, pat in self.functions:
+            matched, matched_stream = self._match(stream, pat, 
                                                   {'strict': True}, {})
             if matched:
-                f = t[0]
                 f(matched_stream, *args)
                 return True
 
