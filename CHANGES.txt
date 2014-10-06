@@ -4,3 +4,5 @@ v0.9.2, 02/09/2014 -- Minor changes to README.
 v0.9.3, 02/09/2014 -- Added to README.
 v0.9.4, 16/09/2014 -- Python 3 compatibility
 v0.9.5, 16/09/2014 -- Documentation issue
+v0.9.6, 06/10/2014 -- Various tidying up due to code review.
+                      Dispatch now throws an exception if a match isn't found.
