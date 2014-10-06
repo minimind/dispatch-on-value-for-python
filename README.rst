@@ -200,6 +200,15 @@ Pass as many extra parameters as you want when dispatching::
     
     dispatch_on_value.dispatch([1, 2], 'abc', 'def')
 
+You can also pass keyword parameters::
+
+    @dispatch_on_value.add([3, 4])
+    def _(a, my_abc, **kwargs):
+        assert 'para1' in kwargs
+        # Do something
+    
+    dispatch_on_value.dispatch([3, 4], 'abc', para1=3)
+
 Matching on dictionaries is either partial or strict
 ====================================================
 

@@ -68,7 +68,7 @@ class DispatchOnValue(object):
 
         return wrap
 
-    def dispatch(self, stream, *args):
+    def dispatch(self, stream, *args, **kwargs):
         """
         Dispatch to function held internally depending upon the value of stream.
 
@@ -80,12 +80,12 @@ class DispatchOnValue(object):
         for f, pat in self.functions:
             matched, matched_stream = self._match(stream, pat, {}, {})
             if matched:
-                f(matched_stream, *args)
+                f(matched_stream, *args, **kwargs)
                 return True
 
         return False
 
-    def dispatch_strict(self, stream, *args):
+    def dispatch_strict(self, stream, *args, **kwargs):
         """
         Dispatch to function held internally depending upon the value of stream.
 
@@ -97,7 +97,7 @@ class DispatchOnValue(object):
             matched, matched_stream = self._match(stream, pat, 
                                                   {'strict': True}, {})
             if matched:
-                f(matched_stream, *args)
+                f(matched_stream, *args, **kwargs)
                 return True
 
         return False

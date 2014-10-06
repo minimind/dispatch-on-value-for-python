@@ -96,6 +96,19 @@ class TestExamples(unittest.TestCase):
         dispatch_on_value.dispatch([1, 2], 'abc', 'def')
         assert called[0] == 1
 
+    def test_4b_pass_keywords(self):
+        called = [0]
+        dispatch_on_value = dv.DispatchOnValue()
+
+        @dispatch_on_value.add([3, 4])
+        def _(a, my_abc, **kwargs):
+            assert my_abc == 'abc'
+            assert 'para1' in kwargs
+            called[0] = 1
+            # Do something
+
+        dispatch_on_value.dispatch([3, 4], 'abc', para1=3)
+
     def test_5_use_lambdas1(self):
         called = [0]
         dispatch_on_value = dv.DispatchOnValue()
