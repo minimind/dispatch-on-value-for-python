@@ -1,5 +1,8 @@
 from distutils.core import setup
 
+with open('README.rst') as f:
+    long_description = f.read()
+
 setup(
     name='dispatchonvalue',
     version='0.9.6',
@@ -11,7 +14,7 @@ setup(
     description='Provides the ability to dispatch on values using pattern '
                 'matching on complex, nested data structures containing '
                 'lists, dictionaries and primitive types',
-    long_description=open('README.rst').read(),
+    long_description=long_description,
     classifiers=[
         'Development Status :: 4 - Beta',
         'License :: OSI Approved :: MIT License',
