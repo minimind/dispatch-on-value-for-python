@@ -11,13 +11,16 @@ class TestExamples(unittest.TestCase):
         @dispatch_on_value.add([1, 2, 3])
         def _(a):
             called[0] = 1
+            return 2
 
         @dispatch_on_value.add([4, 5, 6])
         def _(a):
             called[0] = 2
+            return 3
 
         p = [4, 5, 6]
-        dispatch_on_value.dispatch(p)  # Should call second function above
+        # Should call second function above
+        assert dispatch_on_value.dispatch(p) == 3
         assert called[0] == 2
 
     def test_1_multi_dispatch_on_value(self):
