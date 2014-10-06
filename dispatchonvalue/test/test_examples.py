@@ -42,10 +42,25 @@ class TestExamples(unittest.TestCase):
         dispatch_on_value.dispatch(p)  # Call fn_2 and return True
         assert called[0] == 2
 
+        raised_exception = [0]
         called = [0]
-        p = [1, 2, 6]
-        dispatch_on_value.dispatch(p)  # Not call anything and return False
+        try:
+            p = [1, 2, 6]
+            dispatch_on_value.dispatch(p)  # Not call anything and return False
+        except dv.DispatchFailed:
+            raised_exception[0] = 1
+
+        assert raised_exception[0] == 1
         assert called[0] == 0
+
+        exception_raised = [0]
+        p = [7, 8, 9]
+        try:
+            dispatch_on_value.dispatch(p)
+        except dv.DispatchFailed:
+            exception_raised[0] = 1
+
+        assert exception_raised[0] == 1
 
     def test_2_arbitrary_nested(self):
         called = [0]
@@ -76,9 +91,16 @@ class TestExamples(unittest.TestCase):
         dispatch_on_value.dispatch(['f', 'b', 3, [3, 'd', 'f']])
         assert called[0] == 1
 
+        raised_exception = [0]
         called[0] = 0
-        # Will not match
-        dispatch_on_value.dispatch(['c', 'b', 3, [3, 'd', 'f']])
+
+        try:
+            # Will not match
+            dispatch_on_value.dispatch(['c', 'b', 3, [3, 'd', 'f']])
+        except dv.DispatchFailed:
+            raised_exception[0] = 1
+
+        assert raised_exception[0] == 1
         assert called[0] == 0
 
     def test_4_pass_parameters(self):
@@ -120,8 +142,15 @@ class TestExamples(unittest.TestCase):
         dispatch_on_value.dispatch([1, 2, 4, 'hello'])  # This will match
         assert called[0] == 1
 
+        raised_exception = [0]
         called[0] = 0
-        dispatch_on_value.dispatch([1, 2, 2, 'hello'])  # This will not match
+
+        try:
+            dispatch_on_value.dispatch([1, 2, 2, 'hello'])  # This will not match
+        except dv.DispatchFailed:
+            raised_exception[0] = 1
+
+        assert raised_exception[0] == 1
         assert called[0] == 0
 
     def test_5_use_lambdas2(self):
@@ -135,8 +164,15 @@ class TestExamples(unittest.TestCase):
         dispatch_on_value.dispatch(['a', 2, 'c'])  # This will match
         assert called[0] == 1
 
+        raised_exception = [0]
         called[0] = 0
-        dispatch_on_value.dispatch(['a', 2, 's'])  # This will not match
+
+        try:
+            dispatch_on_value.dispatch(['a', 2, 's'])  # This will not match
+        except dv.DispatchFailed:
+            raised_exception[0] = 1
+
+        assert raised_exception[0] == 1
         assert called[0] == 0
 
     def test_partial_or_strict(self):
@@ -161,9 +197,16 @@ class TestExamples(unittest.TestCase):
         dispatch_on_value.dispatch_strict({'name': 'john', 'age': 32})
         assert called[0] == 1
 
+        raised_exception = [0]
         called[0] = 0
-        # This will not match because the dictionary doesn't match exactly
-        dispatch_on_value.dispatch_strict(
-            {'name': 'john', 'age': 32, 'sex': 'male'}
-        )
+
+        try:
+            # This will not match because the dictionary doesn't match exactly
+            dispatch_on_value.dispatch_strict(
+                {'name': 'john', 'age': 32, 'sex': 'male'}
+            )
+        except dv.DispatchFailed:
+            raised_exception[0] = 1
+
+        assert raised_exception[0] == 1
         assert called[0] == 0

@@ -46,21 +46,29 @@ First register your dispatch methods, alongside the pattern they should match on
     @dispatch_on_value.add([1, 2, 3])  # [1, 2, 3] is the pattern to match on
     def _(a):
         assert a == [1, 2, 3]
-        # Do something
+        # return optional value
+        return 3
 
     @dispatch_on_value.add([4, 5, 6])  # [4, 5, 6] is the pattern to match on
     def _(a):
         assert a == [4, 5, 6]
-        # Do something
+        # return optional value
+        return 4
 
 Then else where in your code, dispatch to the correct function based on the
 value of the parameter passed::
 
     p = [4, 5, 6]
-    dispatch_on_value.dispatch(p)  # Will call second function above
+    r = dispatch_on_value.dispatch(p)  # Will call second function above
 
-The return value is ``True`` or ``False``, depending upon whether a function
-was matched, dispatched, and called.
+If no pattern was matched, and hence no function dispatched, the
+DispatchFailed class will be raised::
+
+    try:
+      p = [7, 8, 9]
+      r = dispatch_on_value.dispatch(p)
+    except dv.DispatchFailed:
+      print 'could not dispatch!'
 
 Features
 ========

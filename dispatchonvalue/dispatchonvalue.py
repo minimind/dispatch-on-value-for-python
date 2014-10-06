@@ -53,6 +53,10 @@ def all_match(p):
     return AllValue(p)
 
 
+class DispatchFailed(Exception):
+    pass
+
+
 class DispatchOnValue(object):
     """Provide dispatch on value for complex arbitrarily nested lists and
     dictionaries."""
@@ -80,10 +84,9 @@ class DispatchOnValue(object):
         for f, pat in self.functions:
             matched, matched_stream = self._match(stream, pat, {}, {})
             if matched:
-                f(matched_stream, *args, **kwargs)
-                return True
+                return f(matched_stream, *args, **kwargs)
 
-        return False
+        raise DispatchFailed()
 
     def dispatch_strict(self, stream, *args, **kwargs):
         """
@@ -97,10 +100,9 @@ class DispatchOnValue(object):
             matched, matched_stream = self._match(stream, pat, 
                                                   {'strict': True}, {})
             if matched:
-                f(matched_stream, *args, **kwargs)
-                return True
+                return f(matched_stream, *args, **kwargs)
 
-        return False
+        raise DispatchFailed()
 
     def _match(self, stream, pattern, context, any_values):
         if isinstance(pattern, AnyValue):
