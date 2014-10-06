@@ -81,9 +81,7 @@ class DispatchOnValue(object):
 
         """
         for t in self.functions:
-            (matched, matched_stream) = self._match(
-                stream, t[1], {}, {}
-            )
+            matched, matched_stream = self._match(stream, t[1], {}, {})
             if matched:
                 f = t[0]
                 f(matched_stream, *args)
@@ -100,9 +98,8 @@ class DispatchOnValue(object):
 
         """
         for t in self.functions:
-            (matched, matched_stream) = self._match(
-                stream, t[1], {'strict': True}, {}
-            )
+            matched, matched_stream = self._match(stream, t[1], 
+                                                  {'strict': True}, {})
             if matched:
                 f = t[0]
                 f(matched_stream, *args)
