@@ -124,7 +124,7 @@ class DispatchOnValue(object):
             return pattern(stream), stream
 
         except TypeError:
-            if not type(stream) == type(pattern):
+            if type(stream) != type(pattern):
                 return False, []
 
             try:
@@ -166,7 +166,7 @@ class DispatchOnValue(object):
                 if not matched:
                     return False, []
         else:
-            if not len(stream) == len(pattern):
+            if len(stream) != len(pattern):
                 return False, []
 
             for s, p in zip(stream, pattern):
@@ -179,7 +179,7 @@ class DispatchOnValue(object):
 
     def _compare_dictionaries(self, stream, pattern, context, any_values):
         if 'strict' in context and context['strict']:
-            if not len(stream) == len(pattern):
+            if len(stream) != len(pattern):
                 return False, []
 
         for k, v in six.iteritems(pattern):
