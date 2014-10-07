@@ -246,4 +246,5 @@ Author and Contributors
 ***********************
 
 Author: `minimind <https://github.com/minimind>`_.
-Contributor: `yurtaev <https://github.com/yurtaev>`_.
+
+Contributors: `yurtaev <https://github.com/yurtaev>`_, `svisser <https://github.com/svisser>`_.
