@@ -220,7 +220,7 @@ You can also pass keyword parameters::
 Methods can also be dispatched
 ------------------------------
 
-You can dispatch methods on class instances using the add_method decorator:
+You can dispatch methods on class instances using the add_method decorator::
 
     dispatch_on_value = dv.DispatchOnValue()
 
