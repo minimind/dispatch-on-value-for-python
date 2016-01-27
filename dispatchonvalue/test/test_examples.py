@@ -1,5 +1,5 @@
 import unittest
-import dispatchonvalue as dv
+from .. import dispatchonvalue as dv
 
 
 class TestExamples(unittest.TestCase):

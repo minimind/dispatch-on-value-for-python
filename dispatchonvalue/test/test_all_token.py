@@ -1,14 +1,14 @@
 import unittest
-import dispatchonvalue as dv
+from ..dispatchonvalue import *
 
 
 class TestAllToken(unittest.TestCase):
     def setUp(self):
-        self.dispatch_on_value = dv.DispatchOnValue()
+        self.dispatch_on_value = DispatchOnValue()
 
     def test_all_token1(self):
         stream = [1]
-        pattern = dv.all_match(1)
+        pattern = all_match(1)
         (matched, stream_found) = self.dispatch_on_value._match(
             stream, pattern, {}, {}
         )
@@ -17,7 +17,7 @@ class TestAllToken(unittest.TestCase):
 
     def test_all_token2(self):
         stream = [1, 1]
-        pattern = dv.all_match(1)
+        pattern = all_match(1)
         (matched, stream_found) = self.dispatch_on_value._match(
             stream, pattern, {}, {}
         )
@@ -26,7 +26,7 @@ class TestAllToken(unittest.TestCase):
 
     def test_all_token3(self):
         stream = [1, 2]
-        pattern = dv.all_match(1)
+        pattern = all_match(1)
         (matched, stream_found) = self.dispatch_on_value._match(
             stream, pattern, {}, {}
         )
@@ -34,7 +34,7 @@ class TestAllToken(unittest.TestCase):
 
     def test_all_token4(self):
         stream = [1, 2]
-        pattern = dv.all_match(2)
+        pattern = all_match(2)
         (matched, stream_found) = self.dispatch_on_value._match(
             stream, pattern, {}, {}
         )
@@ -46,7 +46,7 @@ class TestAllToken(unittest.TestCase):
             {'name': 'sid', 'age': 32}
         ]
 
-        pattern = dv.all_match({'name': 'sid'})
+        pattern = all_match({'name': 'sid'})
         (matched, stream_found) = self.dispatch_on_value._match(
             stream, pattern, {}, {}
         )
@@ -59,7 +59,7 @@ class TestAllToken(unittest.TestCase):
             {'name': 'sid', 'age': 32}
         ]
 
-        pattern = dv.all_match({'name': 'sid'})
+        pattern = all_match({'name': 'sid'})
         (matched, stream_found) = self.dispatch_on_value._match(
             stream, pattern, {}, {}
         )
@@ -71,7 +71,7 @@ class TestAllToken(unittest.TestCase):
             {'name': 'sid', 'age': 32}
         ]
 
-        pattern = dv.all_match({'name': dv.any_a})
+        pattern = all_match({'name': any_a})
         (matched, stream_found) = self.dispatch_on_value._match(
             stream, pattern, {}, {}
         )
@@ -84,7 +84,7 @@ class TestAllToken(unittest.TestCase):
             {'name': 'sid', 'age': 32}
         ]
 
-        pattern = dv.all_match({'name': dv.any_a})
+        pattern = all_match({'name': any_a})
         (matched, stream_found) = self.dispatch_on_value._match(
             stream, pattern, {}, {}
         )

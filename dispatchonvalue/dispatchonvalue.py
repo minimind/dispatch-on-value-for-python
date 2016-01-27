@@ -10,37 +10,37 @@ import six
 from six.moves import zip
 
 
-class AnyValue(object):
+class _AnyValue(object):
     """Allow wildcard item in DispatchOnValue."""
     def __init__(self, num):
         self.num = num
 
-any_a = AnyValue(1)
-any_b = AnyValue(2)
-any_c = AnyValue(3)
-any_d = AnyValue(4)
-any_e = AnyValue(5)
-any_f = AnyValue(6)
-any_g = AnyValue(7)
-any_h = AnyValue(8)
-any_i = AnyValue(9)
-any_j = AnyValue(10)
-any_k = AnyValue(11)
-any_l = AnyValue(12)
-any_m = AnyValue(13)
-any_n = AnyValue(14)
-any_o = AnyValue(15)
-any_p = AnyValue(16)
-any_q = AnyValue(17)
-any_r = AnyValue(18)
-any_s = AnyValue(19)
-any_t = AnyValue(20)
-any_u = AnyValue(21)
-any_v = AnyValue(22)
-any_w = AnyValue(23)
-any_x = AnyValue(24)
-any_y = AnyValue(25)
-any_z = AnyValue(26)
+any_a = _AnyValue(1)
+any_b = _AnyValue(2)
+any_c = _AnyValue(3)
+any_d = _AnyValue(4)
+any_e = _AnyValue(5)
+any_f = _AnyValue(6)
+any_g = _AnyValue(7)
+any_h = _AnyValue(8)
+any_i = _AnyValue(9)
+any_j = _AnyValue(10)
+any_k = _AnyValue(11)
+any_l = _AnyValue(12)
+any_m = _AnyValue(13)
+any_n = _AnyValue(14)
+any_o = _AnyValue(15)
+any_p = _AnyValue(16)
+any_q = _AnyValue(17)
+any_r = _AnyValue(18)
+any_s = _AnyValue(19)
+any_t = _AnyValue(20)
+any_u = _AnyValue(21)
+any_v = _AnyValue(22)
+any_w = _AnyValue(23)
+any_x = _AnyValue(24)
+any_y = _AnyValue(25)
+any_z = _AnyValue(26)
 
 
 class AllValue(object):
@@ -105,7 +105,7 @@ class DispatchOnValue(object):
         raise DispatchFailed()
 
     def _match(self, stream, pattern, context, any_values):
-        if isinstance(pattern, AnyValue):
+        if isinstance(pattern, _AnyValue):
             if pattern.num in any_values:
                 return any_values[pattern.num] == stream, stream
             else:

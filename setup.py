@@ -26,5 +26,5 @@ setup(
               'pattern matching', 'value patterns', 'patterns'],
     include_package_data=True,
     requires=['six'],
-    install_requires=['six >= 1.7.3'],
+    install_requires=['six >= 1.10.0'],
 )
