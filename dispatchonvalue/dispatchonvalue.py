@@ -8,7 +8,7 @@ rid of complicated and difficult to read if...elif...elif... chains.
 """
 import six
 from six.moves import zip
-
+from functools import partial
 
 class _AnyValue(object):
     """Allow wildcard item in DispatchOnValue."""
@@ -68,6 +68,20 @@ class DispatchOnValue(object):
         """Decorator to add new dispatch functions."""
         def wrap(f):
             self.functions.append((f, pattern))
+            return f
+
+        return wrap
+
+    def add_method(self, pattern):
+        """Decorator to add new dispatch functions."""
+        def wrap(f):
+            def frozen_function(class_instance, f):
+                def _(pattern):
+                    return f(class_instance, pattern)
+
+                return _
+
+            self.functions.append((frozen_function(self, f), pattern))
             return f
 
         return wrap
