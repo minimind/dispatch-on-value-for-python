@@ -6,3 +6,4 @@ v0.9.4, 16/09/2014 -- Python 3 compatibility
 v0.9.5, 16/09/2014 -- Documentation issue
 v0.9.6, 06/10/2014 -- Various tidying up due to code review.
                       Dispatch now throws an exception if a match isn't found.
+v0.9.8, 27/01/2016 -- Added add_method to match and dispatch methods, minor fixes.
