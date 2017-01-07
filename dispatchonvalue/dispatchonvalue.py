@@ -76,8 +76,8 @@ class DispatchOnValue(object):
         """Decorator to add new dispatch functions."""
         def wrap(f):
             def frozen_function(class_instance, f):
-                def _(pattern):
-                    return f(class_instance, pattern)
+                def _(pattern, *args, **kwargs):
+                    return f(class_instance, pattern, *args, **kwargs)
 
                 return _
 
