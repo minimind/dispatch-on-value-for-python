@@ -5,7 +5,7 @@ with open('README.rst') as f:
 
 setup(
     name='dispatchonvalue',
-    version='9.9.9',
+    version='0.9.9',
     author='Ian Macinnes',
     author_email='ian.macinnes@gmail.com',
     packages=['dispatchonvalue', 'dispatchonvalue.test'],

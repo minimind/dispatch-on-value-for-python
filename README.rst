@@ -21,9 +21,9 @@ Install using pip::
 
     pip install dispatchonvalue
 
-Unit tests can be run from the source directory using::
+Unit tests can be run using::
 
-    python -m unittest discover -s test
+    python -m unittest discover
 
 Any queries and comments are welcome. Send them to:
 
@@ -274,4 +274,4 @@ Author and Contributors
 
 Author: `minimind <https://github.com/minimind>`_.
 
-Contributors: `yurtaev <https://github.com/yurtaev>`_, `svisser <https://github.com/svisser>`_.
+Contributors: `yurtaev <https://github.com/yurtaev>`_, `svisser <https://github.com/svisser>`_, `mianos <rob@piggymoney.com.au>`_.
