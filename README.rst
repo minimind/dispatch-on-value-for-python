@@ -274,4 +274,4 @@ Author and Contributors
 
 Author: `minimind <https://github.com/minimind>`_.
 
-Contributors: `yurtaev <https://github.com/yurtaev>`_, `svisser <https://github.com/svisser>`_, `mianos <rob@piggymoney.com.au>`_.
+Contributors: `yurtaev <https://github.com/yurtaev>`_, `svisser <https://github.com/svisser>`_, `mianos <https://github.com/mianos>`_.
